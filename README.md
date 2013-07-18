@@ -24,7 +24,7 @@ Merriam-Webster defines reactive as *“readily responsive to a stimulus”*, i.
 
 Each one of these is an essential characteristic of a reactive application. While there are dependencies between them, these traits are not like tiers in a standard layered application architecture sense. Instead they describe design properties that apply across the whole technology stack.
 
-![fig. 1 The Reactive Traits](stack.png)
+![fig. 1 The Reactive Traits](images/stack.png)
 
 In the following we will take a deeper look at each of the four qualities and see how they relate to each other.
 
@@ -57,7 +57,7 @@ The need for eliminating the weakest link in the chain is well illustrated by Am
 
 > The speedup of a program using multiple processors in parallel computing is limited by the sequential fraction of the program. For example, if 95% of the program can be parallelized, the theoretical maximum speedup using parallel computing would be 20× as shown in the diagram, no matter how many processors are used.
 
-![fig. 2 Amdahl's Law](amdahl.png)
+![fig. 2 Amdahl's Law](images/amdahl.png)
 
 ## Scalable
 
@@ -90,7 +90,7 @@ In a reactive application resilience is not an afterthought but part of the desi
 
 In order to *manage failure* we need a way to *isolate* it so it doesn’t spread to other healthy components, and to *observe* it so it can be managed from a safe point outside of the failed context. One pattern that comes to mind is the [bulkhead pattern](http://skife.org/architecture/fault-tolerance/2009/12/31/bulkheads.html), illustrated by the picture, in which a system is built up from safe compartments so that if one of them fails the other ones are not affected. This prevents the classic problem of [cascading failures](http://en.wikipedia.org/wiki/Cascading_failure) and allows the management of problems in isolation.
 
-![fig 3 Bulkheads](tank.png)
+![fig 3 Bulkheads](images/tank.png)
 
 The event-driven model, which enables scalability, also has the necessary primitives to realize this model of failure management. The loose coupling in an event-driven model provides fully isolated components in which failures can be captured together with their context, encapsulated as messages, and sent off to other components that can inspect the error and decide how to respond.
 
@@ -120,7 +120,7 @@ Most reactive applications have rich web and mobile clients which create an enga
 
 With this in mind it becomes apparent how the four qualities *event-driven*, *scalable*, *resilient* and *interactive* are interconnected to form a cohesive whole:
 
-![fig 4. The Reactive Traits](full-reactive.png)
+![fig 4. The Reactive Traits](images/full-reactive.png)
 
 ## Conclusion
 
