@@ -19,7 +19,7 @@ Merriam-Webster defines reactive as *“readily responsive to a stimulus”*, i.
 
 - *react to events*: the event-driven nature enables the following qualities
 - *react to load*: focus on scalability rather than single-user performance
-- *react to faliure*: build resilient systems with the ability to recover at all levels
+- *react to failure*: build resilient systems with the ability to recover at all levels
 - *react to users*: combine the above traits for an interactive user experience
 
 Each one of these is an essential characteristic of a reactive application. While there are dependencies between them, these traits are not like tiers in a standard layered application architecture sense. Instead they describe design properties that apply across the whole technology stack.
