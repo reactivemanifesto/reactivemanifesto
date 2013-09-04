@@ -30,7 +30,7 @@ In the following we will take a deeper look at each of the four qualities and se
 
 ## Event-driven
 
-### Why it is Important?
+### Why it is Important
 
 An application based on asynchronous communication implements a *loosely coupled* design, much better so than one based purely on synchronous method calls. The sender and recipient can be implemented without regards to the details of how the events are propagated, allowing the interfaces to focus on the content of the communication. This leads to an implementation which is easier to extend, evolve and maintain, giving you more flexibility and reducing maintenance cost.
 
