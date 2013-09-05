@@ -5,7 +5,7 @@ The Reactive Manifesto
 
 ## The Need to Go Reactive
 
-Application requirements have changed dramatically in recent years. Only a few years ago a large application had tens of servers, seconds of response time, hours of offline maintenance and gigabytes of data. Today applications are deployed on everything from mobile devices to cloud-based clusters running thousands of multicore processors. Users expect millisecond, or even microsecond, response times and 100% uptime. Data needs are expanding into the petabytes.
+Application requirements have changed dramatically in recent years. Only a few years ago a large application had tens of servers, seconds of response time, hours of offline maintenance and gigabytes of data. Today applications are deployed on everything from mobile devices to cloud-based clusters running thousands of multicore processors. Users expect millisecond or even microsecond response times and 100% uptime. Data needs are expanding into the petabytes.
 
 Initially the domain of innovative internet-driven companies like Google or Twitter, these application characteristics are surfacing in most industries. Finance and telecommunication were the first to adopt new practices to satisfy the new requirements and others have followed.
 
@@ -18,9 +18,9 @@ But now a new architecture has evolved to let developers conceptualize and build
 Merriam-Webster defines reactive as *“readily responsive to a stimulus”*, i.e. its components are “active” and always ready to receive events. This definition captures the essence of reactive applications, focusing on systems that:
 
 - *react to events*: the event-driven nature enables the following qualities
-- *react to load*: focus on scalability and shared nothing designs
+- *react to load*: focus on scalability by avoiding contention on shared resources
 - *react to failure*: build resilient systems with the ability to recover at all levels
-- *react to users*: honour response time guarantees regardless of load
+- *react to users*: honor response time guarantees regardless of load
 
 Each one of these is an essential characteristic of a reactive application. While there are dependencies between them, these traits are not like tiers in a standard layered application architecture sense. Instead they describe design properties that apply across the whole technology stack.
 
@@ -69,7 +69,7 @@ Scalability also helps managing risk: providing too little hardware to keep up w
 
 ### Key Building Blocks
 
-An event-driven system based on asynchronous message-passing provides the foundation for scalability. The loose coupling and location independence between components and subsystems makes it possible to scale out the system onto multiple nodes while retaining the same programming model with the same semantics. Adding more instances of a component increases the system’s capacity to process events. In terms of implementation there is no difference between scaling up by utilizing multiple cores or scaling out by utilizing more nodes in a datacenter or cluster. The topology of the application becomes a deployment decision which is expressed through configuration and/or adaptive runtime algorithms responding to application usage. This is what we call [location transparency](http://en.wikipedia.org/wiki/Location_transparency).
+An event-driven system based on asynchronous message-passing provides the foundation for scalability. The loose coupling and location independence between components and subsystems make it possible to scale out the system onto multiple nodes while retaining the same programming model with the same semantics. Adding more instances of a component increases the system’s capacity to process events. In terms of implementation there is no difference between scaling up by utilizing multiple cores or scaling out by utilizing more nodes in a datacenter or cluster. The topology of the application becomes a deployment decision which is expressed through configuration and/or adaptive runtime algorithms responding to application usage. This is what we call [location transparency](http://en.wikipedia.org/wiki/Location_transparency).
 
 It is important to understand that the goal is not to try to implement transparent distributed computing, distributed objects or RPC-style communication — this has been tried before and it has failed. Instead we need to *embrace the network* by representing it directly in the programming model through asynchronous message-passing. True scalability naturally involves distributed computing and with that inter-node communication which means traversing the network, that as we know is [inherently unreliable](http://aphyr.com/posts/288-the-network-is-reliable). It is therefore important to make the constraints, trade-offs and failure scenarios of network programming explicit in the programming model instead of hiding them behind leaky abstractions that try to “simplify” things. As a consequence it is equally important to provide programming tools which encapsulate common building blocks for solving the typical problems arising in a distributed environment — like mechanisms for achieving consensus or messaging abstractions which offer higher degrees of reliability.
 
@@ -100,35 +100,33 @@ The beauty of this model is that it is purely event-driven, based upon reactive 
 
 ## Responsive
 
-### Why is is Important
+### Why it is Important
 
 Responsive applications are real-time, engaging, rich and collaborative. Businesses create an open and ongoing dialog with their customers by welcoming them through *responsive* interactive experiences. This makes them more efficient, creates a feel of being connected and equipped to solve problems and accomplish tasks. One example is Google Docs which enables users to edit documents collaboratively, in real-time — allowing them to see each other’s edits and comments live, as they are made.
 
-Applications that respond to events need to do so in a timely manner. If an application does not respond within an applicable time constraint then it is effectively unavailable and therefore cannot be considered *resilient*.
+Applications that respond to events need to do so in a timely manner, even in the presence of failure. If an application does not respond within an applicable time constraint — otherwise known as latency — then it is effectively unavailable and therefore cannot be considered *resilient*.
 
-Inability to meet a hard real-time system constraint is a total system failure for some applications such weapons or medical control systems. Not all applications have such strict requirements. Many applications see a rapidly decreasing utility as they deviate from response constraints. Prime examples of such applications are financial trading and risk analysis systems that can lose the current deal without a timely response.
+The inability to meet a hard real-time system constraint amounts to a total system failure for some applications such weapons or medical control systems. Not all applications have such strict requirements. Many applications see a rapidly decreasing utility as they deviate from response constraints, for example a financial trading application can lose the current deal without a timely response.
 
 More mainstream applications, such retail browsing & purchasing, show a measured decline in utility as response time increases. Users interact more with *responsive* applications, resulting in greater volumes of purchasing.
 
-The latency requirement from event stimulus to response action must be honoured for a reactive application even in the presence of failure to appear resilient.
-
-### key Building Blocks
+### Key Building Blocks
 
 Reactive applications use observable models, event streams, and stateful clients.
 
 Observable models enable other systems to receive events when state changes. This can provide a real-time connection between users and systems. For example, when multiple users work concurrently on the same model, changes can be reactively synchronized bi-directionally between them, thus appearing as if the model is shared without the constraints of locking.
 
-Event streams form the basic abstraction on which this connection is built. Keeping them reactive means avoiding blocking and instead allowing asynchronous and non-blocking transformations over full duplex communication mechanisms.
+Event streams form the basic abstraction on which this connection is built. Keeping them reactive means avoiding blocking and instead allowing asynchronous and non-blocking transformations and communication.
 
-Reactive applications embrace the order of algorithms employing design patterns and tests to ensure a response event is returned in O(1) or at least O(log n) time regardless of load.
+Reactive applications embrace the [order of algorithms](http://en.wikipedia.org/wiki/Big_O_notation) by employing design patterns and tests to ensure a response event is returned in O(1) or at least O(log n) time regardless of load. The scaling factor can include but is not limited to customers, sessions, products, and deals.
 
-Reactive applications employ a number of strategies to keep response latency consistent regardless of load profile:
-- Under burst traffic conditions reactive applications amortise the cost of expensive operations, such as IO and concurrent data exchange, by Smart Batching to keep latency consistent.
-- Queues are bounded with appropriate back pressure applied by respecting Little’s Law.
-- Failures are isolated with alternate processing strategies readily available.
+They employ a number of strategies to keep response latency consistent regardless of load profile:
+- Under burst traffic conditions reactive applications amortise the cost of expensive operations, such as IO and concurrent data exchange, by [Smart Batching](http://mechanical-sympathy.blogspot.co.uk/2011/10/smart-batching.html) to keep latency consistent.
+- Queues are bounded with appropriate back pressure applied, queue lengths for given response constraints are determined by employing [Little’s Law](http://en.wikipedia.org/wiki/Little's_law).
 - Systems are monitored with appropriate capacity planning in place.
+- Failures are isolated with alternate processing strategies readily available for when [Circuit Breakers](http://en.wikipedia.org/wiki/Circuit_breaker_design_pattern) are triggered.
 
-Many reactive applications have rich web and mobile clients which create an engaging user experience. These applications execute logic and store state on the client-side in which observable models provide a mechanism to update user interfaces in real-time when data changes. Technologies like WebSockets or Server-Sent Events enable user interfaces to be connected directly with pushed event streams so the event-driven system extends all the way from the back-end to the client. This allows reactive applications to push events to browser and mobile applications in a scalable and resilient way by using asynchronous and non-blocking data transfer.
+As an example of a responsive application consider a web application which has rich clients — browser-based or mobile apps — to create an engaging user experience. This application will execute logic and store state on the client-side in which observable models provide a mechanism to update user interfaces in real-time when data changes. Technologies like WebSockets or Server-Sent Events enable user interfaces to be connected directly with pushed event streams so the event-driven system extends all the way from the back-end to the client. This allows reactive applications to push events to browser and mobile applications in a scalable and resilient way by using asynchronous and non-blocking data transfer.
 
 With this in mind it becomes apparent how the four qualities *event-driven*, *scalable*, *resilient* and *responsive* are interconnected to form a cohesive whole:
 
