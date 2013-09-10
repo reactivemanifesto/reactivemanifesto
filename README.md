@@ -41,7 +41,7 @@ Since the recipient of asynchronous communication can remain dormant until an ev
 In an event-driven application, the components interact with each other through the production and consumption of *events*—discrete pieces of information describing facts. These events are sent and received in an asynchronous and non-blocking fashion. Event-driven systems tend to rely on *push* rather than *pull* or *poll*, i.e. they push data towards consumers when it is available instead of wasting resources by having the consumers continually ask for or wait on the data.
 
 - *Asynchronous* sending of events—also called *message-passing*—means that the application is highly concurrent by design and can make use of multicore hardware without changes. Any core within a CPU is able to process any message event, leading to a dramatic increase in opportunities for parallelization.
-- *Non-blocking* means the ability to make continuous progress in order to for the application to be *responsive* at all times, even under failure and burst scenarios. As such it can enable both lower latency, higher throughput and better *scalability*. 
+- *Non-blocking* means the ability to make continuous progress in order to for the application to be *responsive* at all times, even under failure and burst scenarios. For this all resources needed for a response—for example CPU, memory and network—must not be monopolized. As such it can enable both lower latency, higher throughput and better *scalability*.
 
 Traditional server-side architectures rely on shared mutable state and blocking operations on a single thread. Both contribute to the difficulties encountered when scaling such a system to meet changing demands. Sharing mutable state requires synchronization, which introduces incidental complexity and non-determinism, making the program code hard to understand and maintain. Putting a thread to sleep by blocking uses up a finite resource and incurs a high wake-up cost.
 
@@ -102,7 +102,7 @@ The beauty of this model is that it is purely event-driven, based upon reactive 
 
 ### Why it is Important
 
-Responsive is defined by Merriam-Webster as *"quick to respond or react appropriately"*. We use the word in its general meaning and should not be confused with [Responsive Web Design](http://en.wikipedia.org/wiki/Responsive_Web_Design), which primarily refers to CSS media queries and progressive enhancements.
+Responsive is defined by Merriam-Webster as *"quick to respond or react appropriately"*. We use the word in its general meaning and it should not be confused with [Responsive Web Design](http://en.wikipedia.org/wiki/Responsive_Web_Design), which primarily refers to CSS media queries and progressive enhancements.
 
 Responsive applications are real-time, engaging, rich and collaborative. Businesses create an open and ongoing dialog with their customers by welcoming them through *responsive* interactive experiences. This makes them more efficient, creates a feel of being connected and equipped to solve problems and accomplish tasks. One example is Google Docs which enables users to edit documents collaboratively, in real-time—allowing them to see each other’s edits and comments live, as they are made.
 
@@ -124,7 +124,7 @@ Reactive applications embrace the [order of algorithms](http://en.wikipedia.org/
 
 They employ a number of strategies to keep response latency consistent regardless of load profile:
 
-- Under burst traffic conditions reactive applications amortise the cost of expensive operations, such as IO and concurrent data exchange, by [smart batching](http://mechanical-sympathy.blogspot.co.uk/2011/10/smart-batching.html) to keep latency consistent.
+- Under burst traffic conditions reactive applications amortize the cost of expensive operations—such as IO and concurrent data exchange—by batching to keep latency consistent.
 - Queues are bounded with appropriate back pressure applied, queue lengths for given response constraints are determined by employing [Little’s Law](http://en.wikipedia.org/wiki/Little's_law).
 - Systems are monitored with appropriate capacity planning in place.
 - Failures are isolated with alternate processing strategies readily available for when [circuit breakers](http://en.wikipedia.org/wiki/Circuit_breaker_design_pattern) are triggered.
