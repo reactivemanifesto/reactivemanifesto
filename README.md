@@ -121,7 +121,7 @@ Event streams form the basic abstraction on which this connection is built. Keep
 Reactive applications embrace the [order of algorithms](http://en.wikipedia.org/wiki/Big_O_notation) by employing design patterns and tests to ensure a response event is returned in O(1) or at least O(log n) time regardless of load. The scaling factor can include but is not limited to customers, sessions, products, and deals.
 
 They employ a number of strategies to keep response latency consistent regardless of load profile:
-- Under burst traffic conditions reactive applications amortise the cost of expensive operations, such as IO and concurrent data exchange, by [Smart Batching](http://mechanical-sympathy.blogspot.co.uk/2011/10/smart-batching.html) to keep latency consistent.
+- Under bursty traffic conditions reactive applications amortize the cost of expensive operations, such as IO and concurrent data exchange, by applying batching combined with an understanding and consideration to the underlying resources can keep latency consistent.
 - Queues are bounded with appropriate back pressure applied, queue lengths for given response constraints are determined by employing [Little’s Law](http://en.wikipedia.org/wiki/Little's_law).
 - Systems are monitored with appropriate capacity planning in place.
 - Failures are isolated with alternate processing strategies readily available for when [Circuit Breakers](http://en.wikipedia.org/wiki/Circuit_breaker_design_pattern) are triggered.
