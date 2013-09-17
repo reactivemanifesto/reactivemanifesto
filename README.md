@@ -124,7 +124,7 @@ Reactive applications embrace the [order of algorithms](http://en.wikipedia.org/
 
 They employ a number of strategies to keep response latency consistent regardless of load profile:
 
-- Under burst traffic conditions reactive applications amortize the cost of expensive operations—such as IO and concurrent data exchange—by batching to keep latency consistent.
+- Under bursty traffic conditions reactive applications amortize the cost of expensive operations—such as IO and concurrent data exchange—by applying batching combined with an understanding and consideration of the underlying resources to keep latency consistent.
 - Queues are bounded with appropriate back pressure applied, queue lengths for given response constraints are determined by employing [Little’s Law](http://en.wikipedia.org/wiki/Little's_law).
 - Systems are monitored with appropriate capacity planning in place.
 - Failures are isolated with alternate processing strategies readily available for when [circuit breakers](http://en.wikipedia.org/wiki/Circuit_breaker_design_pattern) are triggered.
