@@ -41,7 +41,7 @@ Since the recipient of asynchronous communication can remain dormant until an ev
 In an event-driven application, the components interact with each other through the production and consumption of *events*—discrete pieces of information describing facts. These events are sent and received in an asynchronous and non-blocking fashion. Event-driven systems tend to rely on *push* rather than *pull* or *poll*, i.e. they push data towards consumers when it is available instead of wasting resources by having the consumers continually ask for or wait on the data.
 
 - *Asynchronous* sending of events—also called *message-passing*—means that the application is highly concurrent by design and can make use of multicore hardware without changes. Any core within a CPU is able to process any message event, leading to a dramatic increase in opportunities for parallelization.
-- *Non-blocking* means the ability to make continuous progress in order to for the application to be *responsive* at all times, even under failure and burst scenarios. For this all resources needed for a response—for example CPU, memory and network—must not be monopolized. As such it can enable both lower latency, higher throughput and better *scalability*.
+- *Non-blocking* means the ability to make continuous progress in order for the application to be *responsive* at all times, even under failure and burst scenarios. To achieve this an application must not monopolize those resources which are needed to convey a response—for example CPU, memory and IO—and release them as soon as possible. As such it can enable both lower latency, higher throughput and better *scalability*.
 
 Traditional server-side architectures rely on shared mutable state and blocking operations on a single thread. Both contribute to the difficulties encountered when scaling such a system to meet changing demands. Sharing mutable state requires synchronization, which introduces incidental complexity and non-determinism, making the program code hard to understand and maintain. Putting a thread to sleep by blocking uses up a finite resource and incurs a high wake-up cost.
 
@@ -96,7 +96,7 @@ The event-driven model, which enables scalability, also has the necessary primit
 
 This approach creates a system where business logic remains clean, separated from the handling of the unexpected, where failure is modeled explicitly in order to be compartmentalized, observed, managed and configured in a declarative way, and where the system can heal itself and recover automatically. It works best if the compartments are structured in a hierarchical fashion, much like a large corporation where a problem is escalated upwards until a level is reached which has the power to deal with it.
 
-The beauty of this model is that it is purely event-driven, based upon reactive components and asynchronous events and therefore *location transparent*. In practice this means that it works in a distributed environment with the same semantics as in a local context.
+The beauty of this model is that it is purely event-driven, based upon reactive components and asynchronous events and therefore *location transparent*. In practice this means that it works in a distributed environment with the same semantics as in a local context. It also means that messages passed between collaborating components can readily be persisted and replayed, adding the ability to resume processing seamlessly even after severe outages, either after repairing the system in place or immediately at a different location with access to a replicated message store.
 
 ## Responsive
 
@@ -128,6 +128,7 @@ They employ a number of strategies to keep response latency consistent regardles
 - Queues are bounded with appropriate back pressure applied, queue lengths for given response constraints are determined by employing [Little’s Law](http://en.wikipedia.org/wiki/Little's_law).
 - Systems are monitored with appropriate capacity planning in place.
 - Failures are isolated with alternate processing strategies readily available for when [circuit breakers](http://en.wikipedia.org/wiki/Circuit_breaker_design_pattern) are triggered.
+- The resources needed to convey degraded service responses are insulated from the rest of the system to provide responsiveness in soft over-load conditions.
 
 As an example of a responsive application consider a web application which has rich clients—browser-based or mobile apps—to create an engaging user experience. This application will execute logic and store state on the client-side in which observable models provide a mechanism to update user interfaces in real-time when data changes. Technologies like WebSockets or Server-Sent Events enable user interfaces to be connected directly with pushed event streams so the event-driven system extends all the way from the back-end to the client. This allows reactive applications to push events to browser and mobile applications in a scalable and resilient way by using asynchronous and non-blocking data transfer.
 
