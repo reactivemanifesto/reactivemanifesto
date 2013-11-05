@@ -108,9 +108,9 @@ Responsive applications are real-time, engaging, rich and collaborative. Busines
 
 Applications that respond to events need to do so in a timely manner, even in the presence of failure. If an application does not respond within an applicable time constraint—otherwise known as latency—then it is effectively unavailable and therefore cannot be considered *resilient*.
 
-The inability to meet a hard real-time system constraint amounts to a total system failure for some applications such weapons or medical control systems. Not all applications have such strict requirements. Many applications see a rapidly decreasing utility as they deviate from response constraints, for example a financial trading application can lose the current deal without a timely response.
+The inability to meet a hard real-time system constraint amounts to a total system failure for some applications such as weapons or medical control systems. Not all applications have such strict requirements. Many applications see a rapidly decreasing utility as they deviate from response constraints, for example a financial trading application can lose the current deal without a timely response.
 
-More mainstream applications, such retail browsing and purchasing, show a measured decline in utility as response time increases. Users interact more with *responsive* applications, resulting in greater volumes of purchasing.
+More mainstream applications, such as retail browsing and purchasing, show a measured decline in utility as response time increases. Users interact more with *responsive* applications, resulting in greater volumes of purchasing.
 
 ### Key Building Blocks
 
