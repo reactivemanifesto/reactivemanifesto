@@ -5,7 +5,7 @@ The Reactive Manifesto
 
 ## The Need to Go Reactive
 
-Application requirements have changed dramatically in recent years. Only a few years ago a large application had tens of servers, seconds of response time, hours of offline maintenance and gigabytes of data. Today applications are deployed on everything from mobile devices to cloud-based clusters running thousands of multicore processors. Users expect millisecond or even microsecond response times and 100% uptime. Data needs are expanding into the petabytes.
+Application requirements have changed dramatically in recent years. Only a few years ago a large application had tens of servers, seconds of response time, hours of offline maintenance and gigabytes of data. Today applications are deployed on everything from mobile devices to cloud-based clusters running thousands of multicore processors. On the client side, trends such as the rapid profusion of smart phones and the rise of the so-called "Internet of Things" will advance the expectations for number of concurrent users a system is expected to handle. Users expect millisecond or even microsecond response times and 100% uptime. Data needs are expanding into the petabytes.
 
 Initially the domain of innovative internet-driven companies like Google or Twitter, these application characteristics are surfacing in most industries. Finance and telecommunication were the first to adopt new practices to satisfy the new requirements and others have followed.
 
