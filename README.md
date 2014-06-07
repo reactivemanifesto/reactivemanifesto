@@ -120,8 +120,6 @@ Observable models enable other systems to receive events when state changes. Thi
 
 Event streams form the basic abstraction on which this connection is built. Keeping them reactive means avoiding blocking and instead allowing asynchronous and non-blocking transformations and communication.
 
-Reactive applications embrace the [order of algorithms](http://en.wikipedia.org/wiki/Big_O_notation) by employing design patterns and tests to ensure a response event is returned in O(1) or at least O(log n) time regardless of load. The scaling factor can include but is not limited to customers, sessions, products and deals.
-
 They employ a number of strategies to keep response latency consistent regardless of load profile:
 
 - Under bursty traffic conditions reactive applications amortize the cost of expensive operations—such as IO and concurrent data exchange—by applying batching combined with an understanding and consideration of the underlying resources to keep latency consistent.
