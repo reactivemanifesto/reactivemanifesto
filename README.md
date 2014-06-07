@@ -9,7 +9,7 @@ Application requirements have changed dramatically in recent years. Only a few y
 
 Initially the domain of innovative internet-driven companies like Google or Twitter, these application characteristics are surfacing in most industries. Finance and telecommunication were the first to adopt new practices to satisfy the new requirements and others have followed.
 
-Evolving requirements demand different technologies. Previous solutions have emphasized managed servers and containers. Scaling was achieved through buying larger servers and concurrent processing via multi-threading. Additional servers were added through complex, inefficient and expensive proprietary solutions.
+Evolving requirements demand different technologies. Previous solutions have emphasized managed servers and containers. Additional servers were added through complex, inefficient and expensive proprietary solutions.
 
 But now an architecture has emerged—combining elements both long-known and novel—that lets developers conceptualize and build applications that satisfy today’s demands. We call these *Reactive Applications*. This architecture allows developers to build systems that are *event-driven, scalable, resilient and responsive*: delivering highly responsive user experiences with a real-time feel, backed by a scalable and resilient application stack, ready to be deployed on multicore and cloud computing architectures. The Reactive Manifesto describes these critical traits which are needed for *going reactive*.
 
