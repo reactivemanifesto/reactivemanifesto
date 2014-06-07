@@ -43,6 +43,15 @@ In an event-driven application, the components interact with each other through 
 - *Asynchronous* sending of events—also called *message-passing*—means that the application is highly concurrent by design and can make use of multicore hardware without changes. Any core within a CPU is able to process any message event, leading to a dramatic increase in opportunities for parallelization.
 - *Non-blocking* means the ability to make continuous progress in order for the application to be *responsive* at all times, even under failure and burst scenarios. To achieve this an application must not monopolize those resources which are needed to convey a response—for example CPU, memory and IO—and release them as soon as possible. As such it can enable both lower latency, higher throughput and better *scalability*.
 
+Asynchronous designs support parallelism, but they do not guarantee it.
+Node.js, for example, emphasizes asynchronous, event-driven programming
+throughout, but can only schedule those events on a single core. Serialization,
+context switching, and deserialization for inter-process messaging is [orders
+of magnitude more expensive than shared-memory
+operations](http://aphyr.com/posts/244-context-switches-and-serialization-in-node),
+which is why we emphasize the use of event-driven systems on top of
+multithreaded runtimes.
+
 Traditional server-side architectures like J2EE rely on shared mutable state and blocking operations on a single thread. Both contribute to the difficulties encountered when scaling such a system to meet changing demands. Sharing mutable state requires synchronization, which introduces incidental complexity and non-determinism, making the program code hard to understand and maintain. Putting a thread to sleep by blocking uses up a finite resource and incurs a high wake-up cost.
 
 The decoupling of event generation and processing allows the runtime platform to take care of the synchronization details and how events are dispatched across threads, while the programming abstraction is raised to the level of business workflows. You think about how events propagate through your system and how components interact instead of fiddling around with low-level primitives such as threads and locks.
