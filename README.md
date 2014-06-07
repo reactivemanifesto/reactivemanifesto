@@ -5,11 +5,11 @@ The Reactive Manifesto
 
 ## The Need to Go Reactive
 
-Application requirements have changed dramatically in recent years. Only a few years ago a large application had tens of servers, seconds of response time, hours of offline maintenance and gigabytes of data. Today applications are deployed on everything from mobile devices to cloud-based clusters running thousands of multicore processors. On the client side, trends such as the rapid profusion of smart phones and the rise of the so-called "Internet of Things" will advance the expectations for number of concurrent users a system is expected to handle. Users expect millisecond or even microsecond response times and 100% uptime. Data needs are expanding into the petabytes.
+Application requirements have changed dramatically in recent years. Only a few years ago a large application had tens of servers, seconds of response time, hours of offline maintenance and gigabytes of data. Today applications are deployed on everything from mobile devices to cloud-based clusters running thousands of multicore processors. On the client side, trends such as the rapid profusion of smart phones and the rise of the so-called "Internet of Things" will advance the expectations for number of concurrent users a system is expected to handle. Users expect millisecond response times and 100% uptime. Data needs are expanding into the petabytes.
 
 Initially the domain of innovative internet-driven companies like Google or Twitter, these application characteristics are surfacing in most industries. Finance and telecommunication were the first to adopt new practices to satisfy the new requirements and others have followed.
 
-Evolving requirements demand different technologies. Previous solutions have emphasized managed servers and containers. Scaling was achieved through buying larger servers and concurrent processing via multi-threading. Additional servers were added through complex, inefficient and expensive proprietary solutions.
+Evolving requirements demand different technologies. Previous solutions have emphasized managed servers and containers. Additional servers were added through complex, inefficient and expensive proprietary solutions.
 
 But now an architecture has emerged—combining elements both long-known and novel—that lets developers conceptualize and build applications that satisfy today’s demands. We call these *Reactive Applications*. This architecture allows developers to build systems that are *event-driven, scalable, resilient and responsive*: delivering highly responsive user experiences with a real-time feel, backed by a scalable and resilient application stack, ready to be deployed on multicore and cloud computing architectures. The Reactive Manifesto describes these critical traits which are needed for *going reactive*.
 
@@ -20,7 +20,7 @@ Merriam-Webster defines reactive as *“readily responsive to a stimulus”*, i.
 - *react to events*: the event-driven nature enables the following qualities
 - *react to load*: focus on scalability by avoiding contention on shared resources
 - *react to failure*: build resilient systems with the ability to recover at all levels
-- *react to users*: honor response time guarantees regardless of load
+- *react to users*: honor response time guarantees
 
 Each one of these is an essential characteristic of a reactive application. While there are dependencies between them, these traits are not like tiers in a standard layered application architecture sense. Instead they describe design properties that apply across the whole technology stack.
 
@@ -36,6 +36,23 @@ An application based on asynchronous communication implements a *loosely coupled
 
 Since the recipient of asynchronous communication can remain dormant until an event occurs or a message is received, an event-driven approach can make efficient use of existing resources, allowing large numbers of recipients to share a single hardware thread. A non-blocking application that is under heavy load can thus have *lower latency and higher throughput* than a traditional application based on blocking synchronization and communication primitives. This results in lower operational costs, increased utilization and happier end-users.
 
+As Lauer and Needham proved in 1978, event-driven systems and threads are
+[http://cgi.di.uoa.gr/~mema/courses/mde518/papers/lauer78.pdf](formally
+equivalent): the scheduler in an event-driven system is the dual of a thread
+scheduler. Processes in the Erlang BEAM VM, Haskell's ThreadIDs, and Clojure's
+core.async embody this isomorphism, scaling to [hundreds of
+thousands](https://www.usenix.org/legacy/events/hotos03/tech/full_papers/vonbehren/vonbehren_html/index.html)
+and even
+[millions](https://groups.google.com/forum/#!topic/comp.lang.functional/5kldn1QJ73c)
+of concurrent processes. Compilers and runtimes can translate threads with
+blocking call styles into highly concurrent programs running on a smaller
+number of physical cores.
+
+However, not all runtimes provide highly scalable threading systems yet. For
+these runtimes, we believe that implementing our own thread scheduler, in the
+form of an event-driven architecture multiplexed onto a smaller number of
+language threads, offers significant concurrency benefits.
+
 ### Key Building Blocks
 
 In an event-driven application, the components interact with each other through the production and consumption of *events*—discrete pieces of information describing facts. These events are sent and received in an asynchronous and non-blocking fashion. Event-driven systems tend to rely on *push* rather than *pull* or *poll*, i.e. they push data towards consumers when it is available instead of wasting resources by having the consumers continually ask for or wait on the data.
@@ -48,16 +65,6 @@ Traditional server-side architectures like J2EE rely on shared mutable state and
 The decoupling of event generation and processing allows the runtime platform to take care of the synchronization details and how events are dispatched across threads, while the programming abstraction is raised to the level of business workflows. You think about how events propagate through your system and how components interact instead of fiddling around with low-level primitives such as threads and locks.
 
 Event-driven systems enable loose coupling between components and subsystems. This level of indirection is, as we will see, one of the prerequisites for scalability and resilience. By removing complex and strong dependencies between components, event-driven applications can be extended with minimal impact on the existing application.
-
-When applications are stressed by requirements for high performance and large scalability it is difficult to predict where bottlenecks will arise. Therefore it is important that the entire solution is asynchronous and non-blocking. In a typical example this means that the design needs to be event-driven from the user request in the UI (in the browser, REST client or elsewhere) to the request parsing and dispatching in the web layer, to the service components in the middleware, through the caching and down to the database. If one of these layers does not participate—making blocking calls to the database, relying on shared mutable state, calling out to expensive synchronous operations—then the whole pipeline stalls and users will suffer through increased latency and reduced scalability.
-
-An application must be *reactive from top to bottom*.
-
-The need for eliminating the weakest link in the chain is well illustrated by [Amdahl’s Law](http://en.wikipedia.org/wiki/Amdahl's_law), which according to Wikipedia is explained as:
-
-> The speedup of a program using multiple processors in parallel computing is limited by the sequential fraction of the program. For example, if 95% of the program can be parallelized, the theoretical maximum speedup using parallel computing would be 20× as shown in the diagram, no matter how many processors are used.
-
-![fig. 2 Amdahl's Law](images/amdahl.png)
 
 ## Scalable
 
@@ -116,11 +123,9 @@ More mainstream applications, such as retail browsing and purchasing, show a mea
 
 Reactive applications use observable models, event streams and stateful clients.
 
-Observable models enable other systems to receive events when state changes. This can provide a real-time connection between users and systems. For example, when multiple users work concurrently on the same model, changes can be reactively synchronized bi-directionally between them, thus appearing as if the model is shared without the constraints of locking.
+[Observable models enable other systems to receive events when state changes.](http://www.cs.ucf.edu/~dcm/Teaching/COT4810-Spring2011/Literature/DataFlowProgrammingLanguages.pdf) This can provide a real-time connection between users and systems. For example, when multiple users work concurrently on the same model, changes can be reactively synchronized bi-directionally between them, thus appearing as if the model is shared without the constraints of locking.
 
 Event streams form the basic abstraction on which this connection is built. Keeping them reactive means avoiding blocking and instead allowing asynchronous and non-blocking transformations and communication.
-
-Reactive applications embrace the [order of algorithms](http://en.wikipedia.org/wiki/Big_O_notation) by employing design patterns and tests to ensure a response event is returned in O(1) or at least O(log n) time regardless of load. The scaling factor can include but is not limited to customers, sessions, products and deals.
 
 They employ a number of strategies to keep response latency consistent regardless of load profile:
 
