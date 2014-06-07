@@ -20,7 +20,7 @@ Merriam-Webster defines reactive as *“readily responsive to a stimulus”*, i.
 - *react to events*: the event-driven nature enables the following qualities
 - *react to load*: focus on scalability by avoiding contention on shared resources
 - *react to failure*: build resilient systems with the ability to recover at all levels
-- *react to users*: honor response time guarantees regardless of load
+- *react to users*: honor response time guarantees
 
 Each one of these is an essential characteristic of a reactive application. While there are dependencies between them, these traits are not like tiers in a standard layered application architecture sense. Instead they describe design properties that apply across the whole technology stack.
 
@@ -119,8 +119,6 @@ Reactive applications use observable models, event streams and stateful clients.
 Observable models enable other systems to receive events when state changes. This can provide a real-time connection between users and systems. For example, when multiple users work concurrently on the same model, changes can be reactively synchronized bi-directionally between them, thus appearing as if the model is shared without the constraints of locking.
 
 Event streams form the basic abstraction on which this connection is built. Keeping them reactive means avoiding blocking and instead allowing asynchronous and non-blocking transformations and communication.
-
-Reactive applications embrace the [order of algorithms](http://en.wikipedia.org/wiki/Big_O_notation) by employing design patterns and tests to ensure a response event is returned in O(1) or at least O(log n) time regardless of load. The scaling factor can include but is not limited to customers, sessions, products and deals.
 
 They employ a number of strategies to keep response latency consistent regardless of load profile:
 
