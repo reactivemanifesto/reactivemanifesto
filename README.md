@@ -49,16 +49,6 @@ The decoupling of event generation and processing allows the runtime platform to
 
 Event-driven systems enable loose coupling between components and subsystems. This level of indirection is, as we will see, one of the prerequisites for scalability and resilience. By removing complex and strong dependencies between components, event-driven applications can be extended with minimal impact on the existing application.
 
-When applications are stressed by requirements for high performance and large scalability it is difficult to predict where bottlenecks will arise. Therefore it is important that the entire solution is asynchronous and non-blocking. In a typical example this means that the design needs to be event-driven from the user request in the UI (in the browser, REST client or elsewhere) to the request parsing and dispatching in the web layer, to the service components in the middleware, through the caching and down to the database. If one of these layers does not participate—making blocking calls to the database, relying on shared mutable state, calling out to expensive synchronous operations—then the whole pipeline stalls and users will suffer through increased latency and reduced scalability.
-
-An application must be *reactive from top to bottom*.
-
-The need for eliminating the weakest link in the chain is well illustrated by [Amdahl’s Law](http://en.wikipedia.org/wiki/Amdahl's_law), which according to Wikipedia is explained as:
-
-> The speedup of a program using multiple processors in parallel computing is limited by the sequential fraction of the program. For example, if 95% of the program can be parallelized, the theoretical maximum speedup using parallel computing would be 20× as shown in the diagram, no matter how many processors are used.
-
-![fig. 2 Amdahl's Law](images/amdahl.png)
-
 ## Scalable
 
 ### Why it is Important
