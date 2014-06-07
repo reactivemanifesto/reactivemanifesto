@@ -36,6 +36,22 @@ An application based on asynchronous communication implements a *loosely coupled
 
 Since the recipient of asynchronous communication can remain dormant until an event occurs or a message is received, an event-driven approach can make efficient use of existing resources, allowing large numbers of recipients to share a single hardware thread. A non-blocking application that is under heavy load can thus have *lower latency and higher throughput* than a traditional application based on blocking synchronization and communication primitives. This results in lower operational costs, increased utilization and happier end-users.
 
+As Lauer and Needham proved in 1978, event-driven systems and threads are
+[formally equivalent](http://cgi.di.uoa.gr/~mema/courses/mde518/papers/lauer78.pdf): the scheduler in an event-driven system is the dual of a thread
+scheduler. Processes in the Erlang BEAM VM, Haskell's ThreadIDs, and Clojure's
+core.async embody this isomorphism, scaling to [hundreds of
+thousands](https://www.usenix.org/legacy/events/hotos03/tech/full_papers/vonbehren/vonbehren_html/index.html)
+and even
+[millions](https://groups.google.com/forum/#!topic/comp.lang.functional/5kldn1QJ73c)
+of threads. Compilers and runtimes can translate threads with blocking call
+styles into highly concurrent programs running on a smaller number of physical
+cores.
+
+However, not all runtimes provide highly scalable threads yet. For these
+runtimes, we believe that implementing our own thread scheduler, in the form of
+an event-driven architecture multiplexed onto a smaller number of language
+threads, offers significant concurrency benefits.
+
 ### Key Building Blocks
 
 In an event-driven application, the components interact with each other through the production and consumption of *events*—discrete pieces of information describing facts. These events are sent and received in an asynchronous and non-blocking fashion. Event-driven systems tend to rely on *push* rather than *pull* or *poll*, i.e. they push data towards consumers when it is available instead of wasting resources by having the consumers continually ask for or wait on the data.
