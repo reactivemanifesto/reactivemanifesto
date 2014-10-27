@@ -1,7 +1,7 @@
 El Manifiesto de Sistemas Ractivos
 ----------------------------------
 
-Organizaciones que trabajan en dominios diferentes independientemente están descubriendo patrones para construir software que buscan lo mismo. Estos sistemas son más robustos, más flexibles y mejor posicionados para cumplir las demandas modernas. 
+Organizaciones que trabajan en dominios diferentes independientemente están descubriendo patrones para construir software que buscan lo mismo. Estos sistemas son más robustos, más flexibles y están mejor posicionados para cumplir las demandas modernas. 
 
 Estos cambios han sucedido porque los requerimientos de aplicaciones han cambiado dramáticamente en los últimos años. Sólo unos pocos años atrás, una gran aplicación tenía decenas de servidores, segundos de tiempo de respuesta, horas de mantenimiento fuera de línea y gigabytes en datos. Hoy, las aplicaciones son desplegadas en cualquier cosa, desde dispositivos móviles hasta clusters en la nube corriendo en miles de procesadores multi-core. Los usuarios esperan tiempos de respuesta de milisegundos y que sus sistemas operen 24/7 (uptime 100%). Los datos son medidos en Petabytes. Las demandas de hoy simplemente no están siendo satisfechas por la arquitectura de software de ayer.
 
