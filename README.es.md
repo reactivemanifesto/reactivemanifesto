@@ -1,4 +1,4 @@
-El Manifiesto de Sistemas Ractivos
+El Manifiesto de Sistemas Reactivos
 ----------------------------------
 
 Organizaciones que trabajan en dominios diferentes independientemente están descubriendo patrones para construir software que buscan lo mismo. Estos sistemas son más robustos, más flexibles y están mejor posicionados para cumplir las demandas modernas. 
