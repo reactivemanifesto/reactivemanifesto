@@ -1,93 +1,92 @@
-# Reactive Manifesto Glossary
+# リアクティブ宣言 用語集
 
-* [Asynchronous](#Asynchronous)
-* [Back-Pressure](#Back-Pressure)
-* [Batching](#Batching)
-* [Delegation](#Delegation)
-* [Component](#Component)
-* [Elasticity (in contrast to Scalability)](#Elasticity)
-* [Failure (in contrast to Error)](#Failure)
-* [Isolation (and Containment)](#Isolation)
-* [Location Transparency](#Location-Transparency)
-* [Message-Driven (in contrast to Event-Driven)](#Message-Driven)
-* [Non-Blocking](#Non-Blocking)
-* [Protocol](#Protocol)
-* [Replication](#Replication)
-* [Resource](#Resource)
-* [Scalability](#Scalability)
-* [System](#System)
-* [User](#User)
+* [非同期](#Asynchronous)
+* [バック・プレッシャー](#Back-Pressure)
+* [バッチ処理](#Batching)
+* [委譲](#Delegation)
+* [コンポーネント](#Component)
+* [弾力性（スケーラビリティと対比して）](#Elasticity)
+* [障害（エラーと対比して）](#Failure)
+* [隔離（と封じ込め）](#Isolation)
+* [位置透過性](#Location-Transparency)
+* [メッセージ駆動（イベント駆動と対比して）](#Message-Driven)
+* [ノンブロッキング](#Non-Blocking)
+* [プロトコル](#Protocol)
+* [レプリケーション](#Replication)
+* [リソース](#Resource)
+* [スケーラビリティ](#Scalability)
+* [システム](#System)
+* [ユーザ](#User)
 
-## <a name="Asynchronous"></a>Asynchronous
-The Oxford Dictionary defines asynchronous as _“not existing or occurring at the same time”_. In the context of this manifesto we mean that the processing of a request occurs at an arbitrary point in time, sometime after it has been transmitted from client to service. The client cannot directly observe, or synchronize with, the execution that occurs within the service. This is the antonym of synchronous processing which implies that the client only resumes its own execution once the service has processed the request.
+## <a name="Asynchronous"></a>非同期
+オックスフォード英語辞典は、**非同期** (asynchronous) を「同時に存在したり起きたりしないこと」と定義している。リアクティブ宣言の文脈では、「クライアントからサービスへ送信されたリクエストが、送信後の任意の時点で処理されること」を意味する。送信先のサービス内でのリクエスト処理の実行を直接クライアントが観測したり、それに対して同期を取ることはできない。非同期の対義語である同期処理では、サービスがリクエストを処理するまでクライアントは自身の実行を再開しない。
 
-## <a name="Back-Pressure"></a>Back-Pressure
-When one [component](#Component) is struggling to keep-up, the [system](#System) as a whole needs to respond in a sensible way. It is unacceptable for the component under stress to fail catastrophically or to drop messages in an uncontrolled fashion. Since it can’t cope and it can’t fail it should communicate the fact that it is under stress to upstream components and so get them to reduce the load. This back-pressure is an important feedback mechanism that allows systems to gracefully respond to load rather than collapse under it. The back-pressure may cascade all the way up to the user, at which point responsiveness may degrade, but this mechanism will ensure that the system is resilient under load, and will provide information that may allow the system itself to apply other resources to help distribute the load, see [Elasticity](#Elasticity).
+## <a name="Back-Pressure"></a>バック・プレッシャー
+ある[コンポーネント](#Component)が全体に追いつけなくなった場合、[システム](#System)全体として何らかの対処をする必要がある。過負荷状態のコンポーネントが壊滅的にクラッシュしたり、制御無くメッセージを損失することは許されない。処理が追いつかなくなっていて、かつクラッシュすることも許されないならば、コンポーネントは上流のコンポーネント群に自身が過負荷状態であることを伝えて負荷を減らしてもらうべきだ。この**バック・プレッシャー** (back-pressure) と呼ばれる仕組みは、過負荷の下でシステムを崩壊させず緩やかに応答を続ける重要なフィードバック機構だ。バック・プレッシャーはユーザまで転送してもよく、その場合、即応性 (resilient) は低下するが負荷の下でのシステムの耐障害性が保証される。また、システムがその情報を使って自身に他のリソースを振り向け、負荷分散を促すこともできる。[弾力性](#Elasticity)を参照。
 
-## <a name="Batching"></a>Batching
-Current computers are optimized for the repeated execution of the same task: instruction caches and branch prediction increase the number of instructions that can be processed per second while keeping the clock frequency unchanged. This means that giving different tasks to the same CPU core in rapid succession will not benefit from the full performance that could otherwise be achieved: if possible we should structure the program such that its execution alternates less frequently between different tasks. This can mean processing a set of data elements in batches, or it can mean performing different processing steps on dedicated hardware threads.
+## <a name="Batching"></a>バッチ処理
+現在のコンピュータは同じタスクを繰り返し実行することに最適化されている。命令キャッシュや分岐予測によって、クロック周波数を一定に保ったまま一秒間に処理できる命令数を増加することができるためだ。そのため、同じ CPU コアへ異なるタスクを立て続けに与えてしまうと、この最適化によって得られる性能をフルに引き出すことができない。もし可能ならば、異なるタスクを交互に実行する頻度を少なくするようにプログラムを構成するべきだ。つまり、データ要素を一つの集合にして**バッチ** (batching) で処理したり、異なる処理ステップを専用のハードウェアスレッドで実行したりすればよい。
 
-The same reasoning applies to the use of external [resources](#Resource) that need synchronization and coordination. The I/O bandwidth offered by persistent storage devices can improve dramatically when issuing commands from a single thread (and thereby CPU core) instead of contending for bandwidth from all cores. Using a single entry point has the added advantage that operations can be reordered to better suit the optimal access patterns of the device (current storage devices perform better for linear than random access).
+同期や協調を必要とする外部[リソース](#Resource)を使用する際も、同様の論理が当てはまる。永続的ストレージ機器が提供する I/O 帯域幅は、単一のスレッド（と CPU コア）がコマンドを発行することにより、全てのコアに帯域幅を争わせる場合よりも劇的に改善する。この方法のさらなる利点は、機器へのエントリポイントが単一なので、機器にとって最適なアクセスパターンへより適合するように操作の順序を入れ替えられることだ。
 
-Additionally, batching provides the opportunity to share out the cost of expensive operations such as I/O or expensive computations. For example, packing multiple data items into the same network packet or disk block to increase efficiency and reduce utilisation.
+さらに、バッチ処理により I/O のような高価な操作や高価な計算のコストを分配できることがある。例えば、複数のデータ要素を同じネットワークパケットやディスクブロックにまとめることで、効率の向上と利用の削減ができる。
 
-## <a name="Delegation"></a>Delegation
-Delegating a task [asynchronously](#Asynchronous) to another [component](#Component) means that the execution of the task will take place in the context of that other component. This delegated context could entail running in a different error handling context, on a different thread, in a different process, or on a different network node, to name a few possibilities. The purpose of delegation is to hand over the processing responsibility of a task to another component so that the delegating component can perform other processing or optionally observe the progress of the delegated task in case additional action is required such as handling failure or reporting progress.
+## <a name="Delegation"></a>委譲
+タスクを[非同期](#Asynchronous)に他の[コンポーネント](#Component)へ**委譲** (delegation) すると、そのタスクの実行は委譲先のコンポーネントのコンテキストで行われる。つまり、委譲されたタスクの実行は異なるエラー処理コンテキスト上や、異なるスレッド内、異なるプロセス内、異なるネットワークノード上で行われることがある。コンポーネントは、タスクを処理する責任をその他のコンポーネントへ委譲して他の処理を実行できるし、あるいは障害処理や進捗報告といった動作が必要な場合に、委譲したタスクの進捗を観察することもできる。
 
-## <a name="Component"></a>Component
-What we are describing is a modular software architecture, which is a very old idea, see for example [Parnas (1972)](https://www.cs.umd.edu/class/spring2003/cmsc838p/Design/criteria.pdf). We are using the term “component” due to its proximity with compartment, which implies that each component is self-contained, encapsulated and [isolated](#Isolation) from other components. This notion applies foremost to the runtime characteristics of the system, but it will typically also be reflected in the source code’s module structure as well. While different components might make use of the same software modules to perform common tasks, the program code that defines the top-level behavior of each component is then a module of its own. Component boundaries are often closely aligned with [Bounded Contexts](http://martinfowler.com/bliki/BoundedContext.html) in the problem domain. This means that the system design tends to reflect the problem domain and so is easy to evolve, while retaining isolation. Message [protocols](#Protocol) provide a natural mapping and communications layer between Bounded Contexts (components).
+## <a name="Component"></a>コンポーネント
+ここで説明するモジュラー・ソフトウェア・アーキテクチャ (modular software architecture) は、とても古くからある概念だ。例えば [Parnas (1972)](https://www.cs.umd.edu/class/spring2003/cmsc838p/Design/criteria.pdf) を見よ。ここでは、モジュールの代わりに**「コンポーネント」** (component) という用語を採用する。これは、コンポーネントの方が意味的に「仕切られた区画」に近いからだ。それぞれのコンポーネントは自立していて、カプセル化されており、他のコンポーネントから[隔離](#Isolation) されている。この概念が最も当てはまるのはシステムの実行時特性に対してだが、一般的に同様にソースコードのモジュール構造にも反映される。異なるコンポーネントは、同じソフトウェアモジュールを用いて共通のタスクを実行するかもしれないが、そのとき、それぞれコンポーネントの最上位の動作を定義するプログラムコードはコンポーネント自身のモジュールだ。コンポーネント境界は、問題領域の[コンテキスト境界](http://martinfowler.com/bliki/BoundedContext.html) (bounded context) と密接なつながりがある。つまり、隔離が保たれていると、システム設計は問題領域を反映しやすいので容易に進化できる。メッセージの[プロトコル](#Protocol)は、コンテキスト（コンポーネント）境界の間の自然なマッピングと通信レイヤを提供する。
 
-## <a name="Elasticity"></a>Elasticity (in contrast to Scalability)
-Elasticity means that the throughput of a system scales up or down automatically to meet varying demand as resource is proportionally added or removed. The system needs to be scalable (see [Scalability](#Scalability)) to allow it to benefit from the dynamic addition, or removal, of resources at runtime. Elasticity therefore builds upon scalability and expands on it by adding the notion of automatic [resource](#Resource) management.
+## <a name="Elasticity"></a>弾力性（スケーラビリティと対比して）
+**弾力性** (elasticity) とは、変化する要求を満たすために、リソースを比例的に追加または除去して、システムのスループットを自動的にスケールアップまたはスケールダウンすることだ。実行時におけるリソースの動的な追加や除去の恩恵を受けるには、システムはスケーラブル（[スケーラビリティ](#Scalability)を参照）である必要がある。弾力性は、つまり、スケーラビリティに対して自動的な[リソース](#Resource)管理の概念を加えて拡張したものだ。
 
-## <a name="Failure"></a>Failure (in contrast to Error)
-A failure is an unexpected event within a service that prevents it from continuing to function normally. A failure will generally prevent responses to the current, and possibly all following, client requests. This is in contrast with an error, which is an expected and coded-for condition—for example an error discovered during input validation, that will be communicated to the client as part of the normal processing of the message. Failures are unexpected and will require intervention before the [system](#System) can resume at the same level of operation. This does not mean that failures are always fatal, rather that some capacity of the system will be reduced following a failure. Errors are an expected part of normal operations, are dealt with immediately and the system will continue to operate at the same capacity following an error.
+## <a name="Failure"></a>障害（エラーと対比して）
+**障害** (failure) はサービス内での予期しないイベントであり、サービスが正常に動作を続けられなくなる。障害が起きるとたいてい、現在の（場合によっては後に続く全ての）クライアントリクエストに応答できなくなる。これは、予期され状況に合わせてコード化されるエラーとは対照的だ。例えば、入力の検証中にエラーが見つかれば、それはメッセージの通常の処理の一部としてクライアントへ伝えられるだろう。障害は予期できないので、[システム](#System)が同等の動作レベルへ復旧しようとする前に介入する必要がある。これは、障害が致命的ではない場合でも、障害の後ではシステムのいくつかの能力が減少しているからだ。エラーは正常な動作の一部として予期されており、即座に対処されるので、システムはエラーの後でも同等の能力で動作を維持できる。
 
-Examples of failures are hardware malfunction, processes terminating due to fatal resource exhaustion, program defects that result in corrupted internal state.
+障害の例として、ハードウェアの誤動作や、リソースの枯渇によるプロセスの終了、内部状態を破損させるようなプログラムの欠陥が挙げられる。
 
-## <a name="Isolation"></a>Isolation (and Containment)
-Isolation can be defined in terms of decoupling, both in time and space. Decoupling in time means that the sender and receiver can have independent life-cycles—they do not need to be present at the same time for communication to be possible. It is enabled by adding [asynchronous](#Asynchronous) boundaries between the [components](#Component), communicating through [message-passing](#Message-Driven). Decoupling in space (defined as [Location Transparency](#Location-Transparency)) means that the sender and receiver do not have to run in the same process, but wherever the operations division or the runtime itself decides is most efficient—which might change during an application's lifetime. 
+## <a name="Isolation"></a>隔離（と封じ込め）
+**隔離** (isolation) は、時間または空間における分離 (decoupling) によって定義できる。時間的分離とは、送信者と受信者がそれぞれ独立したライフサイクルを持てるという意味で、通信を可能とするために同時に存在している必要がない。これは、[コンポーネント](#Component)間に[非同期](#Asynchronous)境界を追加して[メッセージパッシング](#Message-Driven) (message-passing) で通信することで可能になる。（[位置透過性](#Location-Transparency)として定義される）空間的分離とは、送信者と受信者を同じプロセス内で実行する必要がないという意味だ。しかし、運用部門やランタイム自身が決めた場所が最も効率的だったとしても、それはアプリケーションの生存期間中に変わりうる。
 
-True isolation goes beyond the notion of encapsulation found in most object-oriented languages and gives us compartmentalization and containment of:
-* State and behavior: it enables share-nothing designs and minimizes contention and coherence cost (as defined in the [Universal Scalability Law](http://www.perfdynamics.com/Manifesto/USLscalability.html); 
-* Failures: it allows [errors](#Failure) to be captured, signalled and managed at a fine-grained level instead of letting them cascade to other components.
+真の隔離は、オブジェクト指向言語において最も見られるカプセル化の概念を超えたところにあり、これらのものを区切って封じ込めることができる:
+* 状態と動作: シェアード・ナッシングな設計が可能になると共に、（[普遍的スケーラビリティの法則](http://www.perfdynamics.com/Manifesto/USLscalability.html) (Universal Scalability Law) が定義するような）競合および一貫性のコストを最小化する。
+* 故障: [エラー](#Failure)を他のコンポーネントへ転送することなく、細粒度のレベルで捕捉し、シグナルし、管理できる。
 
-Strong isolation between components is built on communication over well-defined [protocols](#Protocol) and enables loose coupling, leading to systems that are easier to understand, extend, test and evolve.
+明確に定義された[プロトコル](#Protocol)を介した通信はコンポーネント間の強い隔離を実現し、それにより疎結合になるので、システムの理解、拡張、テスト、進化がより容易になる。
 
-## <a name="Location-Transparency"></a>Location Transparency
-[Elastic](#Elasticity) systems needs to be adaptive and continuously react to changes in demand, they need to gracefully and efficiently increase and decrease scale. One key insight that simplifies this problem immensely is to realize that we are all doing distributed computing. This is true whether we are running our systems on a single node (with multiple independent CPUs communicating over the QPI link) or on a cluster of nodes (with independent machines communicating over the network). Embracing this fact means that there is no conceptual difference between scaling vertically on multicore or horizontally on the cluster.
+## <a name="Location-Transparency"></a>位置透過性
+[弾力性](#Elasticity)のあるシステムとは適応性のあるシステムだ。それは要求の変化に対して継続的に対応し、緩やかかつ効率的にスケールを増減できる必要がある。一つの鍵となる洞察は、ここでは全てが分散コンピューティングであるということだ。そのことに気付くと、この問題は非常に簡潔になる。このことは、システムが実行されているのがシングルノード(QPI リンクを介して通信する複数の独立した CPU を備える)上であろうと、複数ノードのクラスタ（ネットワークを介して通信する独立したマシンを備える）上であろうと、同様に当てはまる。この事実から言えるのは、マルチコア上での垂直方向のスケーリングと、クラスタ上での水平方向のスケーリングとの間にコンセプトの違いはないということだ。
 
-If all of our [components](#Component) support mobility, and local communication is just an optimization, then we do not have to define a static system topology and deployment model upfront. We can leave this decision to the operations personnel and the runtime, which can adapt and optimize the system depending on how it is used.
+もし全ての[コンポーネント](#Component)に機動性 (mobility) があり、任意の場所に配備が可能ならば、ローカル通信は単なる最適化であり、あらかじめシステムの静的トポロジや配備モデルを定義しておく必要がなくなる。こうした決定を運用の人員やランタイムに任せることで、システムの適応化や最適化をそれがどのように使われるか次第で行うことができる。
 
-This decoupling in space (see the the definition for [Isolation](#Isolation)), enabled through [asynchronous](#Asynchronous) [message-passing](#Message-Driven), and decoupling of the runtime instances from their references is what we call Location Transparency. Location Transparency is often mistaken for 'transparent distributed computing', while it is actually the opposite: we embrace the network and all its constraints—like partial failure, network splits, dropped messages, and its asynchronous and message-based nature—by making them first class in the programming model, instead of trying to emulate in-process method dispatch on the network (ala RPC, XA etc.). Our view of Location Transparency is in perfect agreement with [A Note On Distributed Computing](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.41.7628) by Waldo et al.
+この[非同期性](#Asynchronous)と[メッセージパッシング](#Message-Driven)により可能になる空間的分離（[隔離](#Isolation)の項での定義を見よ）と、ランタイムインスタンスとその参照の分離は、我々が**位置透過性** (location transparency) と呼んでいるものだ。位置透過性は”透過的な分散コンピューティング”としばしば誤解されるが、実際にはその反対だ。我々は、プロセス内のメソッド呼び出しを（RPC や XA のように）ネットワーク上でエミュレートするのではなく、ネットワークとその制約の全て（部分障害、ネットワーク分断、メッセージの喪失、そして非同期かつメッセージに基づくことによる性質）を受け入れて、プログラミングモデルの第一級市民として扱う。我々の位置透過性に対する見方は、Waldo らによる [A Note On Distributed Computing](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.41.7628) と完全に一致する。
 
-## <a name="Message-Driven"></a>Message-Driven (in contrast to Event-Driven)
-A message is an item of data that is sent to a specific destination. An event is a signal emitted by a [component](#Component) upon reaching a given state. In a message-driven system addressable recipients await the arrival of messages and react to them, otherwise lying dormant. In an event-driven system notification listeners are attached to the sources of events such that they are invoked when the event is emitted. This means that an event-driven system focuses on addressable event sources while a message-driven system concentrates on addressable recipients. A message can contain an encoded event as its payload.
+## <a name="Message-Driven"></a>メッセージ駆動（イベント駆動と対比して）
+メッセージは特定の宛先へと送られるデータ項目である。イベントは既定の状態に到達した[コンポーネント](#Component)から発生するシグナルである。**メッセージ駆動** (message-driven) のシステムでは、アドレス可能な受信者はメッセージの到着を待ってそれに反応するか、さもなくば休止状態になる。イベント駆動のシステムでは、通知のリスナーはイベントの発生源に取り付けられ、イベントが発生した時に呼び出される。つまり、イベント駆動システムがアドレス可能なイベントの発生源に焦点を当てるのに対して、メッセージ駆動システムはアドレス可能な受信者に専心している。メッセージは、自身のペイロードに符号化されたイベントを持つことができる。
 
-Resilience is more difficult to achieve in an event-driven system due to the short-lived nature of event consumption chains: when processing is set in motion and listeners are attached in order to react to and transform the result, these listeners typically handle success or [failure](#Failure) directly and in the sense of reporting back to the original client. Responding to the failure of a component in order to restore its proper function, on the other hand, requires a treatment of these failures that is not tied to ephemeral client requests, but that responds to the overall component health state.
+イベント駆動システムではイベント消費チェインの短命な性質故に、耐障害性の達成はより難しい。処理が開始されると共に取り付けられたリスナーはイベントに反応して結果へと変換する。このとき、リスナーは一般的に成功や[障害](#Failure)を直接に処理して元のクライアントへ報告を返す。一方で、コンポーネントの障害に反応してその機能を正常に回復させるには、これらの障害が短命なクライアントリクエストと結びつかないようにし、しかしあらゆるコンポーネントの健康状態に反応するように扱う必要がある。
 
-## <a name="Non-Blocking"></a>Non-Blocking
-In concurrent programming an algorithm is considered non-blocking if threads competing for a resource do not have their execution indefinitely postponed by mutual exclusion protecting that resource. In practice this usually manifests as an API that allows access to the [resource](#Resource) if it is available otherwise it immediately returns informing the caller that the resource is not currently available or that the operation has been initiated and not yet completed. A non-blocking API to a resource allows the caller the option to do other work rather than be blocked waiting on the resource to become available. This may be complemented by allowing the client of the resource to register for getting notified when the resource is available or the operation has completed.
+## <a name="Non-Blocking"></a>ノンブロッキング
+並行プログラミングにおいて、一つのリソースを巡って競争する複数のスレッドが、それらのリソースを相互に排他的に保護することで無期限に実行が延期されるとき、あるアルゴリズムは**ノンブロッキング** (non-blocking) とみなされる。このことは、実際には API として明示される。API は、[リソース](#Resource)が利用可能ならアクセスさせ、そうでなければ直ちに返って、リソースが現時点では利用できなかったり、操作が開始されて未だ完了していないことを呼び出し元へ伝える。リソースに対するノンブロッキング API では、呼び出し元は、リソースが利用可能になるまでブロックして待つ代わりに他の仕事をすることができる。加えて、リソースのクライアントはリソースが利用可能になるか操作が完了したときに自身へ通知するよう登録することができる。
 
-## <a name="Protocol"></a>Protocol
-A protocol defines the treatment and etiquette for the exchange or transmission of messages between [components](#Component). Protocols are formulated as relations between the participants to the exchange, the accumulated state of the protocol and the allowed set of messages to be sent. This means that a protocol describes which messages a participant may send to another participant at any given point in time. Protocols can be classified by the shape of the exchange, some common classes are request–reply, repeated request–reply (as in HTTP), publish–subscribe, and stream (both push and pull).
+## <a name="Protocol"></a>プロトコル
+**プロトコル** (protocol) は、[コンポーネント](#Component)間でのメッセージの交換や転送に対する取り扱いと作法を定義する。プロトコルの策定は、メッセージ交換に参加する者同士の関係、プロトコルの累積的な状態、そして送信可能なメッセージの集合によってなされる。つまりプロトコルは、参加者が任意の時点で他の参加者へ送信できるメッセージを定義する。プロトコルは、交換におけるいくつかの共通の形体（要求-応答型、（HTTP におけるような）繰り返される要求-応答型、出版-購読型、プッシュ型やプル型のストリーム）に分類できる。
 
-In comparison to local programming interfaces a protocol is more generic since it can include more than two participants and it foresees a progression of the state of the message exchange; an interface only specifies one interaction at a time between the caller and the receiver.
+ローカルなプログラミングインタフェースと比べて、プロトコルはより一般的だ。なぜなら、インタフェースは呼び出し元と受信者の間の相互作用を一つずつしか指定できないのに対して、プロトコルは二人以上の参加者を含むことができ、またメッセージ交換の状態の進行を予見するからだ。
 
-It should be noted that a protocol as defined here just specifies which messages may be sent, but not how they are sent: encoding, decoding (i.e. codecs), and transport mechanisms are implementation details that are transparent to the components’ use of the protocol.
+注目すべきは、ここで定義したプロトコルはどんなメッセージを送ることができるかのみを指定しており、どうやって送るかは指定していないということだ。コンポーネントがプロトコルを使用する際に、符号化や復号を行うコーデックや転送メカニズムといった実装の詳細は透過的だ。
 
-## <a name="Replication"></a>Replication
-Executing a [component](#Component) simultaneously in different places is referred to as replication. This can mean executing on different threads or thread pools, processes, network nodes, or computing centers. Replication offers [scalability](#Scalability), where the incoming workload is distributed across multiple instances of a component, or resilience, where the incoming workload is replicated to multiple instances which process the same requests in parallel. These approaches can be mixed, for example by ensuring that all transactions pertaining to a certain user of the component will be executed by two instances while the total number of instances varies with the incoming load, (see [Elasticity](#Elasticity)).
+## <a name="Replication"></a>レプリケーション
+[コンポーネント](#Component)を異なる場所で同時に実行することを**レプリケーション** (replication) と呼ぶ。つまり、コンポーネントは異なるスレッドやスレッドプール、プロセス、ネットワークノード、コンピューティングセンターで実行される。レプリケーションは[スケーラビリティ](#Scalability)（受信したワークロードをコンポーネントの複数のインスタンスに分散する）と耐障害性（受信したワークロードを複数のインスタンスに複製して、同じリクエストを並列に処理する）を提供する。これらのやり方は組み合わせることができ、例えば、受信した負荷によってインスタンスの総数が変化しても、コンポーネントのあるユーザに関する全てのトランザクションが二つのインスタンスで実行されることを保証する、といったことができる（[弾力性](#Elasticity)を見よ）。
 
-## <a name="Resource"></a>Resource
-Everything that a [component](#Component) relies upon to perform its function is a resource that must be provisioned according to the component’s needs. This includes CPU allocation, main memory and persistent storage as well as network bandwidth, main memory bandwidth, CPU caches, inter-socket CPU links, reliable timer and task scheduling services, other input and output devices, external services like databases or network file systems etc. The [elasticity](#Elasticity) and resilience of all these resources must be considered, since the lack of a required resource will prevent the component from functioning when required.
+## <a name="Resource"></a>リソース
+[コンポーネント](#Component)が自身の機能を実行するのに依存するあらゆるものが**リソース** (resource) であり、コンポーネントが必要とするのに従って供給されなければならない。これらのリソースには CPU 割り当て、メインメモリ、永続化ストレージなどがあり、同様にネットワーク帯域、メインメモリ帯域、CPU キャッシュ、ソケット間 CPU リンク、高信頼なタイマーとタスクスケジューリングサービス、その他の入出力デバイス、データベースやネットワークファイルシステムのような外部サービス、などが含まれる。必要なリソースが不足していると必要なときにコンポーネントが機能しないので、これらの全てのリソースについて[弾力性](#Elasticity)と耐障害性を考慮する必要がある。
 
-## <a name="Scalability"></a>Scalability
-The ability of a [system](#System) to make use of more computing [resources](#Resource) in order to increase its performance is measured by the ratio of throughput gain to resource increase. A perfectly scalable system is characterized by both both numbers being proportional: a twofold allocation of resources will double the throughput. Scalability is typically limited by the introduction of bottlenecks or synchronization points within the system, leading to constrained scalability, see [Amdahl’s Law and Gunther’s Universal Scalability Model](http://blogs.msdn.com/b/ddperf/archive/2009/04/29/parallel-scalability-isn-t-child-s-play-part-2-amdahl-s-law-vs-gunther-s-law.aspx).
+## <a name="Scalability"></a>スケーラビリティ
+システムが自身の性能を向上させるためにさらなる計算[リソース](#Resource)を利用する能力は、スループットの向上のリソースの増加に対する比率によって測定される。完全な**スケーラビリティ** (scalability) があるシステムでは両者の数値は比例するので、リソースの割り当てが二倍になればスループットも二倍になる。ボトルネックやシステム内の同期点は、一般にスケーラビリティが制約される原因となる。[アムダールの法則とグンサーの普遍的スケーラビリティモデル](http://blogs.msdn.com/b/ddperf/archive/2009/04/29/parallel-scalability-isn-t-child-s-play-part-2-amdahl-s-law-vs-gunther-s-law.aspx) を見よ。
 
-## <a name="System"></a>System
-A system provides services to its [users](#User) or clients. Systems can be large or small, in which case they comprise many or just a few [components](#Component). All components of a system collaborate to provide these services. In many cases the components are in a client–server relationship within the same system (consider for example front-end components relying upon back-end components). A system shares a common resilience model, by which we mean that [failure](#Failure) of a component is handled within the system, [delegated](#Delegation) from one component to the other. It is useful to view groups of components within a system as subsystems if they are [isolated](#Isolation) from the rest of the system in their function, [resources](#Resource) or failure modes.
+## <a name="System"></a>システム
+**システム** (system) は[ユーザ](#User)やクライアントにサービスを提供する。システムはその大小に関わらず、多数またはごく少数の[コンポーネント](#Component)から成る。システムの全てのコンポーネントは協調してサービスを提供する。多くの場合、コンポーネントは同じシステム内でクライアント−サーバ関係にある（フロントエンドコンポーネントがバックエンドコンポーネントに依存している場合など）。システムは共通の耐障害モデルを共有する。つまり、あるコンポーネントの[障害](#Failure)は他のコンポーネントへ[委譲](#Delegation)してシステム内で対処する。これは、システム内のコンポーネントグループをサブシステムとみなして、その機能や[リソース](#Resource)、障害モデルをシステムの他の部分から[隔離](#Isolation)するのに有用だ。
 
-## <a name="User"></a>User
-We use this term informally to refer to any consumer of a service, be that a human or another service.
-
+## <a name="User"></a>ユーザ
+サービスの何らかの消費者を指して使う**「ユーザ」** (user) という用語は、ここでは、人間やその他のサービスのことである。
