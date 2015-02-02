@@ -1,7 +1,7 @@
 Das Reaktive Manifest
 ---------------------
 
-In unterschiedlichen Zweigen der Softwareindustrie stoßen Organisationen und Entwickler auf wiederkehrende Muster in den Anforderungen und der Implementierung moderner Systeme. Um den heutigen Ansprüchen zu genügen, müssen diese robuster und anpassungsfähiger sein, als es früher der Fall war. Dieser Wandel wird deutlich bei der Betrachtung des technischen und sozialen Ausmaßes der Verwendung von Computersystemen.
+In unterschiedlichen Zweigen der Softwareindustrie stoßen Organisationen und Entwickler auf wiederkehrende Muster in den Anforderungen und der Implementierung moderner Systeme. Um den heutigen Ansprüchen zu genügen, müssen diese robuster und anpassungsfähiger sein, als es früher der Fall war. Dieser Wandel ist bedingt durch das rapide wachsende technische und soziale Ausmaß der Verwendung von Computersystemen in unserer Gesellschaft.
 
 Bestanden große Anwendungen vor wenigen Jahren noch aus Dutzenden von Servern, die Antwortzeiten im Sekundenbereich lieferten, regelmäßig für Stunden gewartet wurden und Daten in der Größenordnung von Gigabytes verarbeiteten, so umfassen sie heute Tausende von Vielkernprozessoren, verteilt auf mobile Endgeräte und in der Cloud. Benutzer erwarten Antwortzeiten im Bereich von Millisekunden und ständige Verfügbarkeit, die Datenmenge bemisst sich in Petabytes.
 
