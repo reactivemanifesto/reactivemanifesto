@@ -7,7 +7,7 @@ Bestanden große Anwendungen vor wenigen Jahren noch aus Dutzenden von Servern, 
 
 Wir glauben, dass die Anforderungen, die heute an Computersysteme gestellt werden, nur zu erfüllen sind durch die gleichzeitige Ausrichtung an vier Qualitäten, deren Wert bislang nur einzeln betrachtet wurde: Systeme müssen stets antwortbereit, widerstandsfähig, elastisch und nachrichtenorientiert sein. Dann nennen wir sie reaktive Systeme.
 
-Computersysteme, die nach diesen Anforderungen entwickelt werden, erweisen sich als anpassungsfähiger, mit weniger starr gekoppelten Komponenten und in jeder Hinsicht [skalierbarer](/glossary.de#Scalability). Sie sind einfacher weiterzuentwickeln und zu verändern. Sie reagieren zuverlässiger und eleganter auf Fehler und vermeiden so desaströse [Ausfälle](/glossary.de#Failure). Reaktive Systeme bereiten dem [Benutzer](/glossary.de#User) durch ihre fortwährende Antwortfreudigkeit eine interaktive und befriedigende Erfahrung.
+Computersysteme, die nach diesen Anforderungen entwickelt werden, erweisen sich als anpassungsfähiger, mit weniger starr gekoppelten Komponenten und in jeder Hinsicht [skalierbarer](/glossary.de#Scalability). Sie sind einfacher weiterzuentwickeln und zu verändern. Sie reagieren zuverlässiger und eleganter auf Fehler und vermeiden so desaströse [Ausfälle](/glossary.de#Failure). Reaktive Systeme bereiten dem [Benutzer](/glossary.de#User) durch ihre fortwährende Antwortfreudigkeit eine interaktive und höchst befriedigende Erfahrung.
 
 Reaktive Systeme sind:
 
