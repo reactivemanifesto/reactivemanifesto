@@ -18,4 +18,4 @@ Systems built as Reactive Systems are more flexible, loosely-coupled and [scalab
 
 Large systems are composed of smaller ones and therefore depend on the Reactive properties of their constituents. This means that Reactive Systems apply design principles so these properties apply at all levels of scale, making them composable. The largest systems in the world rely upon architectures based on these properties and serve the needs of billions of people daily. It is time to apply these design principles consciously from the start instead of rediscovering them each time.
 
-[Sign the manifesto](http://www.reactivemanifesto.org/)
+[Sign the manifesto](http://www.reactivemanifesto.org/#sign-button)

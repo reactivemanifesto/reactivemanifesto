@@ -18,4 +18,4 @@ Sistemas desenvolvidos como Sistemas Reactivos são mais flexíveis, desacupolad
 
 Os grandes sistemas são compostos por sistemas mais pequenos, que por sua vez dependem das propriedades Reactivas dos seus componentes. Isto significa que os Sistemas Reactivos aplicam estes princípios a todos os níveis, permitindo diversas combinações entre os vários componentes. Os maiores sistemas do mundo dependem de arquitecturas baseadas nestes princípios, servindo as necessidades de biliões de pessoas diariamente. É tempo de aplicar estes princípios conscientemente desde o princípio, do que ter que os descobrir de cada vez que implementamos um novo sistema.
 
-[Assinar O Manifesto pela Reactividade](http://www.reactivemanifesto.org/)
+[Assinar O Manifesto pela Reactividade](http://www.reactivemanifesto.org/pt#sign-button)

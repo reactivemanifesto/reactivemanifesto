@@ -18,4 +18,4 @@ Reaktive Systeme sind:
 
 Große Anwendungen bestehen stets aus mehreren Komponenten und sind daher abhängig von deren Reaktivität. Deshalb müssen die genannten vier reaktiven Qualitäten in der Architektur einer jeden Ebene des Gesamtsystems berücksichtigt werden, wodurch reaktive Systeme schichtweise komponierbar sind. Die größten Computersysteme der Welt basieren bereits auf diesen Prinzipien und dienen Milliarden von Menschen in deren täglichen Leben. Es ist an der Zeit, diesen Ansatz bewusst zu Grunde zu legen anstatt ihn in Teilen für jedes Projekt neu zu entdecken.
 
-[Das Manifest unterzeichnen.](http://www.reactivemanifesto.org/)
+[Das Manifest unterzeichnen.](http://www.reactivemanifesto.org/de#sign-button)

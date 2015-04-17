@@ -18,4 +18,4 @@ Los Sistemas construidos como Sistemas Reactivos son más flexibles, con bajo ac
 
 Los grandes sistemas estás compuestos de otros más pequeños y por lo tanto dependen de las propieades Reactivas de sus constituyentes. Esto significa que los Sistemas Reactivos aplican principios de diseño de manera que apliquen estas propiedades a toda escala, haciéndoles componibles. Los sistemas más grandes del mundo confían sobre arquitecturas basadas en estas propiedades y sirven las necesidades de miles de millones de personas diariamente. Es tiempo de aplicar estos principios de diseño conscientemente desde un principio en vez de redescubrirlos cada vez. 
 
-[Firme el Manifiesto](http://www.reactivemanifesto.org/)
+[Firme el Manifiesto](http://www.reactivemanifesto.org/es#sign-button)
