@@ -19,4 +19,4 @@ Sistemas criados como Reativos são muito mais flexíveis, Systems built as Reac
 
 Grandes sistemas são compostos por pequenos serviços e portanto, dependem das propriedades reativas de cada um deles. Isto significa dizer que Sistemas Reativos não foge da regra dessas regras e se aplica a todos os níveis de escalonamento, fazendo com que eles se baseiam se tornem compostos.Grandes sistemas no mundo tomam como base nessas propriedades e servem as necessidades de bilhões de pessoas todos os dias. Está na hora de aplicar esses princípios conscientemente do início ao contrário de redescobri-los a cada hora.
 
-[Assine o manifesto reativo](http://www.reactivemanifesto.org/)
+[Assine o manifesto reativo](http://www.reactivemanifesto.org/pt-BR#sign-button)

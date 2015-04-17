@@ -18,4 +18,4 @@ Des systèmes développés selon ces directives sont plus flexibles, à couplage
 
 De grandes applications sont toujours composées de plus petits composants et par conséquent dépendent des propriétés réactives de chaque composant. Cela veut dire que les Systèmes Réactifs emploient des méthodes de conception qui permettent d’appliquer les quatre propriétés réactives à toute échelle, les rendant composables selon ces quatre aspects. Les plus grands systèmes informatiques dans le monde dépendent d’architectures construites basées sur ces propriétés et répondent au besoin de milliards de personnes au quotidien. Il est temps d’appliquer ces principes de conception systématiquement dès le début de la conception de nouveaux systèmes au lieu de les redécouvrir à chaque fois.
 
-[Signer le manifeste](http://www.reactivemanifesto.org/)
+[Signer le manifeste](http://www.reactivemanifesto.org/fr#sign-button)
