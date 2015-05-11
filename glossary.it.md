@@ -1,0 +1,95 @@
+# Glossario del Manifesto dei Sistemi Reattivi
+
+* [Asincrono](#Asincrono)
+* [Feedback di pressione](#Feedback-di-pressione)
+* [Batching](#Batching)
+* [Delega](#Delega)
+* [Componente](#Componente)
+* [Elasticità (in contrapposizione alla Scalabilità)](#Elasticità)
+* [Guasto (in contrapposizione all'Errore)](#Guasto)
+* [Isolamento (e Contenimento)](#Isolamento)
+* [Trasparenza al Dislocamento](#Trasparenza-al-dislocamento)
+* [Orientamento ai Messaggi (in contrapposizione all'Orientamento agli Eventi)](#Orientamento-ai-messaggi)
+* [Non-bloccante](#Non-bloccante)
+* [Protocollo](#Protocollo)
+* [Replica](#Replica)
+* [Risorsa](#Risorsa)
+* [Scalabilità](#Scalabilità)
+* [Sistema](#Sistema)
+* [Utente](#Utente)
+
+## <a name="Asincrono"></a>Asincrono
+L'Oxford Dictionary definisce il termine "asincrono" come _“non esistente o in occorrenza allo stesso istante temporale”_. In questo manifesto intendiamo che il processamento di una richiesta accade in un istante di tempo arbitrario, un certo lasso di tempo dopo che è stata trasmessa dal client al servizio. Il client non può osservare direttamente le operazioni eseguite all'interno del servizio, né tantomeno sincronizzarsi con esse. Ciò è l'esatto opposto del processamento sincrono, il quale implica che il client riprenda la propria esecuzione solo una volta che il servizio ha servito la sua richiesta.
+
+## <a name="Feedback-di-pressione"></a>Feedback di pressione
+Quando un [Componente](#Componente) arranca nel mantenere l'operatività, il [Sistema](#Sistema) nel senso della sua interezza deve rispondere in maniera energica.
+Non è accettabile che un Componente sotto stress vada in crash con conseguenze catastrofiche oppure che esso invii messaggi in maniera incontrollata: se esso non riesce a mantenere il ritmo ma tuttavia non deve andare in crash, dovrebbe comunicare il suo stato di stress operativo ai Componenti situati a monte ed ottenere che essi riducano il suo carico in input. Questo feedback di pressione è un meccanismo di segnalazione importante perchè consente i Sistemi di rispondere elegantemente al carico di lavoro e di non collassare sotto di esso. Il feedback di pressione può propagarsi a cascata lungo la catena dei Componenti fino all'Utente: a questo punto può accadere che la responsività diminuisca, ma questo meccanismo garantisce che il Sistema sia resiliente sotto carico e fornisce informazioni che possono aiutare il Sistema stesso ad impiegare ulteriori Risorse per distribuire il carico (vedi [Elasticità](#Elasticità))
+
+## <a name="Batching"></a>Batching
+I computer moderni sono ottimizzati per l'esecuzione ripetuta di task similari: il caching delle istruzioni macchina e la branch prediction aumentano il numero di istruzioni che possono essere eseguite ogni secondo senza variare la frequenza di clock. Ciò significa che l'esecuzione in successione di task differenti sullo stesso CPU core non avviene mai al massimo della performance teoricamente raggiungibile: se fosse possibile, dovremmo strutturare il flusso di programma in modo che alterni meno frequentemente tra task tra di loro differenti. Questo significa ad esempio processare un dataset in batch di calcolo, oppure eseguire step di calcolo differenti su thread hardware dedicati.
+
+Lo stesso tipo di ragionamento si applica all'uso di [Risorse](#Risorsa) esterne che necessitano di sincronizzazione e coordinamento. La banda dati in I/O ai dispositivi di archiviazione può migliorare di molto quando si eseguono comandi da un singolo thread (e dunque un singolo CPU core) al posto di suddividere concorrentemente la banda su tutti i core. L'utilizzo di un singolo entry point ha il vantaggio che le operazioni possono essere riordinate per adattarsi al meglio agli schemi di accesso ottimale del dispositivo (gli attuali dispositivi di storage lavorano al meglio con accessi a memoria lineari piuttosto che puntuali)
+
+Inoltre, il batching offre l'opportunità di alleviare il costo di operazioni onerose quali I/O o calcoli intensivi: per esempio, l'inclusione di più frammenti di dati nello stesso pacchetto di rete o nello stesso blocco di un disco ne riduce l'utilizzo e ne aumenta l'efficienza.
+
+## <a name="Delega"></a>Delega
+Delegare un task ad un altro [Componente](#Componente) in modo [asincrono](#Asincrono) significa che l'esecuzione del task avrà luogo nell'ambito di tale Componente. Ad esempio, l'esecuzione in un contesto delegato può avvenire in un diverso ambito di gestione degli errori, in un thread diverso, in un processo diverso o su un nodo di rete diverso. Lo scopo della delega è di affidare ad un altro Componente la responsabilità di eseguire un task così che il Componente che delega sia libero di fare altro e possa opzionalmente monitorare l'esecuzione del task delegato nel caso in cui siano richieste azioni aggiuntive come ad esempio gestirne i guasti o riportarne lo stato di esecuzione ad altre entità.
+
+## <a name="Componente"></a>Componente
+Quando parliamo di modularità nelle architetture software trattiamo di concetti che esistono da tempo, si legga ad esempio [Parnas (1972)](https://www.cs.umd.edu/class/spring2003/cmsc838p/Design/criteria.pdf). Utilizziamo il termine "Componente" per la sua vicinanza al concetto di compartimento, il che implica che ogni Componente sia completamente auto-contenuto, incapsulato e [isolato](#Isolamento) dagli altri Componenti. Questi tratti definiranno soprattutto le caratteristiche del Sistema a runtime, ma tipicamente si rifletteranno anche sul codice sorgente nella struttura dei moduli. Benchè Componenti diversi possano usare gli stessi moduli software per implementare task comuni, il codice che definisce il comportamento di alto-livello di ogni Componente constituisce un modulo a parte. I confini tra i Componenti sono spesso allineati con i [Bounded Contexts](http://martinfowler.com/bliki/BoundedContext.html) nel dominio di interesse del sistema: ciò significa che il design del Sistema tende a rispecchiare il dominio di interesse e ad evolvere senza sforzo conservando l'Isolamento. I [protocolli](#Protocollo) di messaging costituiscono un naturale strato di mapping e comunicazione tra i Bounded Contexts (Componenti).
+
+
+## <a name="Elasticità"></a>Elasticità (in contrapposizione alla Scalabilità)
+Elasticità significa che il throughput di un Sistema scala automaticamente, aumentando/diminuendo per soddisfare carichi variabili mentre vengono aggiunte/rimosse Risorse in maniera proporzionale. Il Sistema deve essere scalabile (vedi [Scalabilità](#Scalabilità)) per beneficiare dall'aggiunta o rimozione dinamica di Risorse a runtime. Dunque l'Elasticità si fonda sulla Scalabilità e la sviluppa ulteriormente introducendo il concetto di gestione delle [Risorse](#Risorsa).
+
+## <a name="Guasto"></a>Guasto (in contrapposizione all'Errore)
+Un Guasto è un evento che accade all'interno di un servizio in maniera inaspettata e ne impedisce il normale funzionamento. In generale, un Guasto impedisce la formulazione di risposte al client attuale, e potenzialmente a tutti quelli futuri. Questo si contrappone al concetto di errore, che è uno stato di operatività prevista e la cui gestione è coperta dal codice - ad esempio un errore identificato in sede di validazione degli input, che verrà comunicato al client come parte del normale processamento del messaggio. I Guasti sono inaspettati e richiedono un pronto intervento prima che il [Sistema](#Sistema) possa riprendere il livello di operatività precedente. Ciò non significa che i Guasti siano necessariamente sempre catastrofici, ma piuttosto che l'operatività del Sistema sarà ridotta in seguito ad un Guasto. Gli Errori, essendo occorrenze previste nel normale flusso operativo, sono gestiti immediatamente e il Sistema continuerà ad operare alla stessa capacità in seguito ad essi.
+
+Esempi di Guasti sono: malfunzionamenti dell'hardware, terminazione di processi dovuta ad un pesante esaurimento di Risorse, bachi di programmazione che generano corruzione nello stato interno dei Componenti.
+
+## <a name="Isolamento"></a>Isolamento (e Contenimento)
+L'Isolamento può essere definito in termine di disaccoppiamento, sia temporale che spaziale. Disaccoppiare temporalmente significa che l'entità che invia e quella che riceve possono avere life-cycles indipendenti - non devono essere attivi allo stesso istante temporale affinchè la comunicazione possa avvenire. L'Isolamento è reso possibile dall'aggiunta di confini [asincroni](#Asincrono) tra i [Componenti](#Componente) che comunicano attraverso il [passaggio di messaggi](#Orientamento-ai-messaggi). Il disaccoppiamento spaziale (definito anche come [Trasparenza al Dislocamento](#Trasparenza-al-dislocamento)) presuppone che l'entità che invia e quella che riceve non debbano essere eseguiti nello stesso processo ma nel luogo in cui risultano più efficienti - luogo che può cambiare nel corso della vita di un'applicazione.
+
+Un pieno Isolamento va oltre la nozione di incapsulamento presente nella maggior parte dei linguaggi object-oriented e realizza compartimentazione e contenimento di:
+* Stato e comportamento: favorisce design architetturali di tipo share-nothing e minimizza la contesa di Risorse e il costo di coerenza (così come definito nella [Legge di Scalabilità Universale](http://www.perfdynamics.com/Manifesto/USLscalability.html); 
+* Guasti: consente di catturare, segnalare e gestire a grana fina gli [errori](#Guasto) piuttosto di lasciare che si propaghino a cascata su altri Componenti.
+
+Un forte Isolamento tra i Componenti si fonda su [Protocolli](#Protocollo) ben definiti e risulta in un basso accoppiamento tra di essi, portando a realizzare Sistemi che sono più semplici da capire, estendere, testare e fare evolvere.
+
+## <a name="Trasparenza-al-dislocamento"></a>Trasparenza al Dislocamento
+I Sistemi [Elastici](#Elasticità) devono essere adattativi e reagire di continuo alle variazioni del carico di lavoro, devono aumentare e decrementare la loro scala in modo elegante ed efficace. Un modo per semplificare incredibilmente questo problema è rendersi conto che il computing odierno è tutto distribuito: questo vale sia che i nostri Sistemi girino su un singolo nodo di calcolo (con CPU multiple che comunicano su link QPI) o che girino su un cluster (con macchine indipendenti che comunicano in rete). Riconoscere ciò significa affermare che non c'è alcuna differenza concettuale tra la scalabilità verticale su multicore e la scalabilità orizzontale su cluster.
+
+Se tutti i nostri [Componenti](#Componente) supportano la mobilità, e la comunicazione a livello locale diventa solo una forma di ottimizzazione, a questo punto non dobbiamo definire a priori né una topologia statica né un modello di deployment per il nostro Sistema. Possiamo delegare questa decisione al personale dedito alle operazioni e all'ambiente di runtime, i quali possono adattare e ottimizzare il Sistema a seconda di come viene utilizzato.
+
+Il disaccoppiamento spaziale (si veda la definizione di [Isolamento](#Isolamento)), reso possibile dal [passaggio di messaggi](#Orientamento-ai-messaggi)[Asincrono](#Asincrono), e il disaccoppiamento delle istanze runtime dai loro riferimenti è ciò che chiamiamo Trasparenza al Dislocamento. La Trasparenza al Dislocamento viene spesso confusa con il 'computing distribuito trasparente', mentre è il suo esatto opposto: facciamo leva sulle reti informatiche e riconosciamo tutti i loro Guasti parziali, i loro split, la loro perdite di pacchetti e la loro natura Asincrona e orientata ai messaggi - dando a tutti questi elementi una dignità primaria nel modello di programmazione piuttosto che emulare sulla rete l'in-process method dispatching (RPC, XA, etc). La nostra idea di Trasparenza al Dislocamento risulta in perfetta sintonia con la [Nota sul Computing Distribuito](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.41.7628) di Waldo et al.
+
+## <a name="Orientamento-ai-messaggi"></a>Orientamento ai Messaggi (in contrapposizione all'Orientamento agli Eventi)
+Un messaggio è un insieme di dati inviato ad una specifica destinazione. Un evento è un segnale emesso da un [Componente](#Componente) al raggiungimento di un determinato stato. In un Sistema orientato ai Messaggi alcune entità indirizzabili attendono la ricezione di messaggi e quando ciò accade reagiscono di conseguenza, altrimenti restano dormienti. In un Sistema orientato agli eventi alcune entità preposte all'ascolto di notifiche sono annesse alle sorgenti degli eventi e la loro esecuzione è iniziata all'emissione di questi ultimi. Ciò significa che i Sistemi orientati agli eventi si concentrano su sorgenti indirizzabili di eventi mentre i Sistemi orientati ai messaggi si concentrano su entità riceventi indirizzabili. Un messaggio può contenere un evento come suo payload.
+
+E' più complesso raggiungere la Resilienza in un Sistema orientato agli eventi a causa della breve durata delle catene di consumo degli eventi: quando il processamento è avviato e le entità preposte all'ascolto sono collegate per reagire e trasformare i risultati, queste ultime tipicamente gestiscono direttamente successi e [Guasti](#Guasto) e riportando un feedback al client originale. Rispondere al Guasto di un Componente per ripristinarne la funzionalità, d'altro canto, richiede che il trattamento dei Guasti non sia legato a richieste effimere da parte dei client ma che risponda allo stato di salute globale del Componente.
+
+## <a name="Non-bloccante"></a>Non-bloccante
+Nella programmazione concorrente un algoritmo viene considerato Non-bloccante se accade che l'esecuzione di più thread in competizione per ottenere una Risorsa non risulta indefinitamente congelata a causa della mutua esclusione nell'accesso a tale Risorsa. In pratica, ciò significa che un'API consente l'accesso ad una [Risorsa](#Risorsa) se questa è disponibile altrimenti essa informa immediatamente il chiamante che tale Risorsa non è al momento disponibile oppure che l'operazione è stata iniziata e non è ancora stata completata. Un'API Non-bloccante nei confronti di una Risorsa consente ai chiamanti di occuparsi di altro invece che rimanere bloccati in attesa che la Risorsa diventi disponibile. Questo può essere ulteriormente migliorato consentendo ai client della Risorsa di registrarsi e ottenere una notifica quando la Risorsa diventa disponibile oppure l'operazione in corso è stata completata.
+
+## <a name="Protocollo"></a>Protocollo
+Un Protocollo definisce le modalità di scambio o trasmissione di messaggi tra [Componenti](#Componente). I Protocolli sono formulati come relazioni tra le entità che partecipano allo scambio, lo stato cumulato del Protocollo e il corpo dei messaggi che è lecito inviare. Ciò significa che un Protocollo descrive quali messaggi un'entità partecipante può inviare ad un altro partecipante in ogni istante temporale. I Protocolli possono essere classificati secondo la natura dello scambio dei messaggi, alcuni casi tipici sono richiesta-risposta, richiesta-risposta ripetuta (es: HTTP), publish-subscribe e streaming (sia push che pull).
+
+Se comparato alle interfacce di programmazione locale, un Protocollo si rivela più generico perchè può includere più di due partecipanti e prevede un avanzamento dello stato dello scambio di messaggi; un'interfaccia locale specifica solo un'unica interazione alla volta tra un chiamante ed un ricevente.
+
+Si noti che, per come lo definiamo, un Protocollo specifica solo quali messaggi si possano inviare ma non come lo siano: l'encoding, il decoding (es: i codecs) e il meccanismo di trasporto sono dettagli implementativi trasparenti ai Componenti che usano il Protocollo .
+
+## <a name="Replica"></a>Replica
+L'esecuzione simultanea di un [Componente](#Componente) in locazioni differenti è definito come Replica. Questa esecuzione può avvenire su thread, pool di thread, processi, nodi di rete o centri di computing tra di loro differenti. La Replica permette [Scalabilità](#Scalabilità), laddove il carico di lavoro è distribuito su istanze multiple di un Componente, o resilienza, laddove il carico è replicato su istanze multiple preposte al processamento delle stesse richieste in parallelo. Questi approcci possono essere abbinati, ad esempio facendo in modo che tutte le transazioni che si riferiscono ad un certo Utente del Componente siano gestite da due istanze di questo, mentre il numero totale di istanze varia al variare del carico di lavoro in arrivo (si veda [Elasticità](#Elasticità)).
+
+## <a name="Risorsa"></a>Risorsa
+Tutto ciò su cui un [Componente](#Componente) fa affidamento per funzionare è una Risorsa che deve essere messa a disposizione a seconda delle necessità del Componente. Ciò comprende l'allocazione di CPU, memoria principale e spazio di archiviazione così come banda di rete, banda sui bus di memoria, cache della CPU, links inter-socket tra CPU, servizi di timing affidabile e di task scheduling, device di input e output, servizi esterni quali database o file-system di rete, etc.
+L'[Elasticità](#Elasticità) e la resilienza di tutte queste Risorse va tenuta in considerazione, dal momento che il venir meno di una Risorsa che serve ad un Componente impedirà a questo di funzionare quando serve.
+
+## <a name="Scalabilità"></a>Scalabilità
+La capacità di un [Sistema](#Sistema) di utilizzare più [Risorse](#Risorsa) di computing per aumentare la propria performance si misura tramite il rapporto tra il guadagno di throughput e l'aumento delle Risorse impiegate. Per un Sistema perfettamente scalabile, questi numeri sono proporzionali: il raddoppio nell'allocazione di Risorse porterà al raddoppio del throughput. La Scalabilità è tipicamente limitata dall'introduzione di colli di bottiglia o sincronicità all'interno del Sistema, il che porta ad una Scalabilità vincolata - si vedano la [Legge di Amdahl e il Modello di Scalabilità Universale di Gunther](http://blogs.msdn.com/b/ddperf/archive/2009/04/29/parallel-Scalabilità-isn-t-child-s-play-part-2-amdahl-s-law-vs-gunther-s-law.aspx).
+
+## <a name="Sistema"></a>Sistema
+Un Sistema fornisce servizi ai propri [Utenti](#Utente) o client. Vi sono Sistemi grandi o piccoli, composti quindi di molti o pochi [Componenti](#Componente). Tutti i Componenti di un Sistema collaborano per realizzare i servizi offerti. In molti casi tali Componenti si trovano relazionati in un modello client-server all'interno del Sistema (si consideri ad esempio i Componenti di front-end che si appoggiano ai Componenti di back-end). Un Sistema condivide un modello di resilienza comune, secondo il quale il [Guasto](#Guasto) di un Componente viene gestito all'interno del Sistema e [delegato](#Delega) dal Componente stesso ad gli altri. E' utile pensare ai gruppi di Componenti di un Sistema come sottoSistemi se tali gruppi sono [isolati](#Isolamento) dal resto del Sistema in quanto a funzionalità, alle [Risorse](#Risorsa) che utilizzano o alle loro modalità di Guasto.
+
+## <a name="Utente"></a>Utente
+Usiamo questo termine informale per riferirci ad ogni entità che consuma un servizio, sia essa un essere umano o un altro servizio.
