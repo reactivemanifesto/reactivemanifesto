@@ -1,0 +1,25 @@
+Reaktif Manifesto
+----------------------
+
+Farklı alanlarda calışan organizasyonlar, modern ihtiyaçları karsılayabilmek amacıyla giderek daha sağlam, dayanıklı ve esnek sistemler geliştirmektedirler. Bu tarz yazılım sistemleri geliştirmek için birbirlerinden bağımsız olarak tasarım örüntüleri ve yazılım mimarileri ortaya çıkmaktadır. 
+
+Geçen yıllarda ihtiyaçların dramatik bir şekilde değişmesi ile yeni yazılım mimarileri ve tasarım örüntüleri ortaya çıktı.
+Sadece birkaç yıl önce büyük bir uygulama demek, onlarca sunucu, saniyelerle olçülen geribildirim sureleri, saatler süren bakım çalışmaları ve giga-byte larca veri demekti. Bu günün modern uygulamaları mobil aletlerden, milyonlarca işlemcili sunucu kümelerine kadar değişik şekillerde karşımıza çıkmakta. Veriler peta-byte larla ölçülmekte. 
+Özetle, bugün'ün ihtiyaçları dünün yazılım mimarileriyle karşılanamamakta.
+
+Bizler sistemlerin duyarlı, dayanıklı, elastik ve mesaj güdümlü yönlerinin gerekliliğini kabullenmekte ve sistem mimarilerinde tutarlı bir yaklaşımın gerekliliğine inanmaktayız. Bu sistemleri Reaktif Sistemler olarak adlandırıyoruz. 
+
+Reaktif Sistem olarak geliştirilen sistemler, daha esnek, gevşek bağlaşımlı ve [ölçeklenir](/glossary#Scalability) olmakta ve bu da geliştirmeyi daha kolay ve değişime açık kılmaktadır. Aksaklıklara karşı daha toleranslı ve [aksama](/glossary#Failure) durumunlarıyla daha güzel biçimlerde başa çıkmaktadırlar. Reaktif sistemler daha duyarlı olup [kullanıcı](/glossary#User)lara etkin interaktif geribildirim sağlarlar.
+
+*Reaktif Sistemler:*
+
+* <a name="Responsive"></a>**Duyarlı**: [System](/glossary#System) mümkün oldukca hızlı geribildirim sağlar. Duyarlılık kullanılabilirlik ve yararlılık için çok önemli olmakla beraber problemlerin hızla saptanıp, etkin bir şekilde ele alınmasının önünü açar. Duyarlı sistemler surekli ve kaliteli servis sağlamak için geribildirim süresi limitleri belirler ve hızlı ve tutarlı geribildirim sağlamaya odaklanırlar. Bu tutarlı yaklaşım hatalarla başa çıkmayı kolaylaştırır, kullanıcıya güven verir ve daha fazla etkileşimi teşvik eder.
+
+* <a name="Resilient"></a>**Dayanıklı**: Sistem [aksaklık](/glossary#Failure) durumunda duyarlı bir şekilde çalışmaya ve geribildirim vermeye devam eder. Bu sadece kritik uygulamalara has değildir, dayanıklı olmayan tüm sistemler, aksaklık durumunda işlevselliğini yitirir. Dayanıklılık [replikasyon](/glossary#Replication), sınırlama, [izolasyon](/glossary#Isolation) ve [delegasyon](/glossary#Delegation) ile mümkün olmaktadır. Aksaklıkların bileşenlerce sınırlanması ve bileşenlerin birbirlerinden izole edilmesi, sistemin parçalarının aksaması durumunda sistemin tamamının etkilenmeden aksayan bileşenlerin onarılabilmesini sağlar. Bileşenlerin onarılması görevi başka (dış) bileşenlere delege edilir ve gerektiğinde replikasyon kullanılarak yüksek derecede ulaşılabilirlik sağlanır. Bileşenlerin istemcileri aksaklıklarla başa çıkmak zorunda değildir.
+* <a name="Elastic"></a>**Elastik**: Sistem değişken iş yüklerinde duyarlı bir şekilde çalışmaya devam eder. Reaktif Sistemler işlemler için gerekli [kaynaklar](/glossary#Resource)ı artırıp azaltarak girdi seviyelerindeki değişikliklere karşılık verebilir. Bu yaklaşım merkezi darboğazları, ve cekişme noktaları olmayan, bileşenleri replike edip, girdileri bileşenlere dagitabilen tasarımlarla mümkün olmaktadır. 
+Reaktif Sistemler canlı performans ölçüleri sağlayarak tahmine dayalı ya da tepkisel ölçekleme algoritmalarının hayata geçirilmesini mümkün kılar. Bu sayede, var olan ticari donanımları ve yazılım platformlarını kullanarak düşük maliyetle [elastik](/glossary#Elasticity) olabilirler.
+* <a name="Message-Driven"></a>**Mesaj Güdümlü**: Reaktif Sistemler bileşenler arasındaki bağımlılığı azaltmak, izolasyon ve [konumdan bağımsız](/glossary#Location-Transparency)lığı sağlamak ve [hata](/glossary#Failure)ları mesaj olarak delege edebilmek için [asenkron](/glossary#Asynchronous) [mesajlaşma](/glossary#Message-Driven) kullanırlar. Belirlenmiş mesajlaşma yöntemi kullanmak; mesaj kuyruklarını denetleyerek, yük dağıtımı, elastiklik ve akış kontrolünü, ve gerektiğinde [geri-basınç](/glossary#Back-Pressure) uygulamayı mümkün kılar. İletişim için konumdan bağımsız mesajlaşma kullanmak; tek sunucuda ya da sunucu kümelerinde aynı kurgu ve semantik ile aksaklık yonetimini mümkün kılar. [Tıkanmasız](/glossary#Non-Blocking) iletişim alıcıların sadece aktif olduklarında [kaynak](/glossary#Resource)ları kullanmasına izin vererek, daha az kaynak kullanımına yol açar.
+
+Büyük sistemler, küçük sistemlerin bir araya gelmesinden oluştuğundan, bileşenlerinin reaktif özelliklerine bağlıdırlar. Daha açıkça; Reaktif Sistemler tasarım prensiplerini hayata geçirirler ve bu özellikleri bütün seviyelerde geçerli kılarlar, dolayısıyla bütünleşerek büyük sistemler oluşturabilirler. Günümüzde dünyanın en büyük sistemleri bu özelliklere sahip mimariler üzerine kurulmuştur ve her gün milyarlarca insana hizmet vermektedirler. Bu tasarım prensiplerini her seferinde tekrar keşfetmektense, bilinçli bir şekilde bastan uygulamanın zamanıdır.
+
+[Manifestoyu imzalayın](http://www.reactivemanifesto.org/#sign-button)
