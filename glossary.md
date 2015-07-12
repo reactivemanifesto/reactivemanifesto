@@ -3,8 +3,8 @@
 * [Asynchronous](#Asynchronous)
 * [Back-Pressure](#Back-Pressure)
 * [Batching](#Batching)
-* [Delegation](#Delegation)
 * [Component](#Component)
+* [Delegation](#Delegation)
 * [Elasticity (in contrast to Scalability)](#Elasticity)
 * [Failure (in contrast to Error)](#Failure)
 * [Isolation (and Containment)](#Isolation)
@@ -31,11 +31,11 @@ The same reasoning applies to the use of external [resources](#Resource) that ne
 
 Additionally, batching provides the opportunity to share out the cost of expensive operations such as I/O or expensive computations. For example, packing multiple data items into the same network packet or disk block to increase efficiency and reduce utilisation.
 
-## <a name="Delegation"></a>Delegation
-Delegating a task [asynchronously](#Asynchronous) to another [component](#Component) means that the execution of the task will take place in the context of that other component. This delegated context could entail running in a different error handling context, on a different thread, in a different process, or on a different network node, to name a few possibilities. The purpose of delegation is to hand over the processing responsibility of a task to another component so that the delegating component can perform other processing or optionally observe the progress of the delegated task in case additional action is required such as handling failure or reporting progress.
-
 ## <a name="Component"></a>Component
 What we are describing is a modular software architecture, which is a very old idea, see for example [Parnas (1972)](https://www.cs.umd.edu/class/spring2003/cmsc838p/Design/criteria.pdf). We are using the term “component” due to its proximity with compartment, which implies that each component is self-contained, encapsulated and [isolated](#Isolation) from other components. This notion applies foremost to the runtime characteristics of the system, but it will typically also be reflected in the source code’s module structure as well. While different components might make use of the same software modules to perform common tasks, the program code that defines the top-level behavior of each component is then a module of its own. Component boundaries are often closely aligned with [Bounded Contexts](http://martinfowler.com/bliki/BoundedContext.html) in the problem domain. This means that the system design tends to reflect the problem domain and so is easy to evolve, while retaining isolation. Message [protocols](#Protocol) provide a natural mapping and communications layer between Bounded Contexts (components).
+
+## <a name="Delegation"></a>Delegation
+Delegating a task [asynchronously](#Asynchronous) to another [component](#Component) means that the execution of the task will take place in the context of that other component. This delegated context could entail running in a different error handling context, on a different thread, in a different process, or on a different network node, to name a few possibilities. The purpose of delegation is to hand over the processing responsibility of a task to another component so that the delegating component can perform other processing or optionally observe the progress of the delegated task in case additional action is required such as handling failure or reporting progress.
 
 ## <a name="Elasticity"></a>Elasticity (in contrast to Scalability)
 Elasticity means that the throughput of a system scales up or down automatically to meet varying demand as resource is proportionally added or removed. The system needs to be scalable (see [Scalability](#Scalability)) to allow it to benefit from the dynamic addition, or removal, of resources at runtime. Elasticity therefore builds upon scalability and expands on it by adding the notion of automatic [resource](#Resource) management.
