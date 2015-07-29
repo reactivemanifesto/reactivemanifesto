@@ -50,7 +50,7 @@ Isolation can be defined in terms of decoupling, both in time and space. Decoupl
 
 True isolation goes beyond the notion of encapsulation found in most object-oriented languages and gives us compartmentalization and containment of:
 * State and behavior: it enables share-nothing designs and minimizes contention and coherence cost (as defined in the [Universal Scalability Law](http://www.perfdynamics.com/Manifesto/USLscalability.html); 
-* Failures: it allows [errors](#Failure) to be captured, signalled and managed at a fine-grained level instead of letting them cascade to other components.
+* Failures: it allows [failures](#Failure) to be captured, signalled and managed at a fine-grained level instead of letting them cascade to other components.
 
 Strong isolation between components is built on communication over well-defined [protocols](#Protocol) and enables loose coupling, leading to systems that are easier to understand, extend, test and evolve.
 
