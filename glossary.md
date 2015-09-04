@@ -45,6 +45,10 @@ A failure is an unexpected event within a service that prevents it from continui
 
 Examples of failures are hardware malfunction, processes terminating due to fatal resource exhaustion, program defects that result in corrupted internal state.
 
+## <a name="Flow-Control"></a>Flow-Control
+Flow control is the mechanism that ensures the rate at which a sender is transmitting is in proportion with the receiver's receiving capabilities. [From techopedia's definition.](https://www.techopedia.com/definition/3797/flow-control)
+The flow control scheme described in this document is credit-based flow control, in which receivers tell senders how many items they may receive without exceeding their buffering or processing capability.
+
 ## <a name="Isolation"></a>Isolation (and Containment)
 Isolation can be defined in terms of decoupling, both in time and space. Decoupling in time means that the sender and receiver can have independent life-cycles—they do not need to be present at the same time for communication to be possible. It is enabled by adding [asynchronous](#Asynchronous) boundaries between the [components](#Component), communicating through [message-passing](#Message-Driven). Decoupling in space (defined as [Location Transparency](#Location-Transparency)) means that the sender and receiver do not have to run in the same process, but wherever the operations division or the runtime itself decides is most efficient—which might change during an application's lifetime. 
 
