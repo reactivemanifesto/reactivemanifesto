@@ -15,8 +15,6 @@
 
 * <a name="有回复性的"></a>**有回复性的**：系统在面临[故障](#故障)时也能保持灵敏度。可回复性不仅适用于高可用的关键任务系统——任何系统都可以具有这种属性，一个不具可回复性的系统一旦出现故障，就会变得不灵敏。可回复性可以通过[复制](/glossary#复制)，围控，[隔离](/glossary#隔离)和[委派](#/glossary#委派)等方式实现。在可回复性的系统中，故障被包含在每个组件中，各组件之间相互隔离，从而允许系统的某些部分出故障并且在不连累整个系统的前提下进行恢复。每个组件的恢复过程都可委派给另一个（外部的）组件来完成，并且在必要的位置可借助复制机制来确保系统的高可用性。这样一来，组件的客户就不必为处理组件自身的故障而承担压力。
 
-* <a name="Elastic"></a>**Elastic**: The system stays responsive under varying workload. Reactive Systems can react to changes in the input rate by increasing or decreasing the [resources](/glossary#Resource) allocated to service these inputs. This implies designs that have no contention points or central bottlenecks, resulting in the ability to shard or replicate components and distribute inputs among them. Reactive Systems support predictive, as well as Reactive, scaling algorithms by providing relevant live performance measures. They achieve [elasticity](/glossary#Elasticity) in a cost-effective way on commodity hardware and software platforms.
-
 * <a name="可伸缩的"></a>**可伸缩的**：系统在变化的工作负载下保持灵敏。响应式系统能够对输入速率的变化做出反应，通过增加或减少[资源](/glossary#资源)分配的方式服务这些输入。这意味着系统在设计上不存在争用点或中心的瓶颈，进而让共享或复制的模块有能力应对，并可以把输入分发给这些模块。通过提供相关的实时性能测量数据，响应式系统既支持预测式量级扩展算法，也支持响应式的量级扩展算法。响应式系统可以在商业的硬件和软件平台上以经济实惠的方式实现[可伸缩性](/glossary#可伸缩性)。
 
 * <a name="消息驱动的"></a>**消息驱动的**：响应式系统依赖[异步的](/glossary#异步的)[消息传递](/glossary#消息驱动) 建立组件之间的界限，这一界限确保了松耦合，隔离，[位置透明性](/glossary#位置透明性)等特性的实现，还提供了以消息的形式把[故障](/glossary#故障)委派出去的手段。利用显式的消息传递，可以通过建立和监视消息队列的方式实现负载管理、可伸缩性以及流程控制，还可以在必要时应用[背压](/glossary#背压)机制。位置透明的消息传递作为一种沟通手段，使得故障管理可以在相同的构造和语义下工作，无论实际的工作环境是跨集群的环境还是一个单独的主机。[非阻塞](/glossary#非阻塞)沟通则允许消息接收者仅在激活的状态下消费资源，导向更少量的系统开销。
