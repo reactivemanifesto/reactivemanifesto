@@ -15,11 +15,11 @@
 
 * <a name="有回复性的"></a>**有回复性的**：系统在面临[故障](#故障)时也能保持灵敏度。可回复性不仅适用于高可用的关键任务系统——任何系统都可以具有这种属性，一个不具可回复性的系统一旦出现故障，就会变得不灵敏。可回复性可以通过[复制](/glossary#复制)，围控，[隔离](/glossary#隔离)和[委派](#/glossary#委派)等方式实现。在可回复性的系统中，故障被包含在每个组件中，各组件之间相互隔离，从而允许系统的某些部分出故障并且在不连累整个系统的前提下进行恢复。每个组件的恢复过程都可委派给另一个（外部的）组件来完成，并且在必要的位置可借助复制机制来确保系统的高可用性。这样一来，组件的客户就不必为处理组件自身的故障而承担压力。
 
+* <a name="Elastic"></a>**Elastic**: The system stays responsive under varying workload. Reactive Systems can react to changes in the input rate by increasing or decreasing the [resources](/glossary#Resource) allocated to service these inputs. This implies designs that have no contention points or central bottlenecks, resulting in the ability to shard or replicate components and distribute inputs among them. Reactive Systems support predictive, as well as Reactive, scaling algorithms by providing relevant live performance measures. They achieve [elasticity](/glossary#Elasticity) in a cost-effective way on commodity hardware and software platforms.
+
 * <a name="可伸缩的"></a>**可伸缩的**：系统在变化的工作负载下保持灵敏。响应式系统能够对输入速率的变化做出反应，通过增加或减少[资源](/glossary#资源)分配的方式服务这些输入。这意味着系统在设计上不存在争用点或中心的瓶颈，进而让共享或复制的模块有能力应对，并可以把输入分发给这些模块。通过提供相关的实时性能测量数据，响应式系统既支持预测式量级扩展算法，也支持响应式的量级扩展算法。响应式系统可以在商业的硬件和软件平台上以经济实惠的方式实现[可伸缩性](/glossary#可伸缩性)。
 
-* <a name="Message-Driven"></a>**Message Driven**: Reactive Systems rely on [asynchronous](/glossary#Asynchronous) [message-passing](/glossary#Message-Driven) to establish a boundary between components that ensures loose coupling, isolation, [location transparency](/glossary#Location-Transparency), and provides the means to delegate [errors](/glossary#Failure) as messages. Employing explicit message-passing enables load management, elasticity, and flow control by shaping and monitoring the message queues in the system and applying [back-pressure](/glossary#Back-Pressure) when necessary. Location transparent messaging as a means of communication makes it possible for the management of failure to work with the same constructs and semantics across a cluster or within a single host. [Non-blocking](/glossary#Non-Blocking) communication allows recipients to only consume [resources](/glossary#Resource) while active, leading to less system overhead.
-
-* <a name="消息驱动的"></a>**消息驱动的**:
+* <a name="消息驱动的"></a>**消息驱动的**：响应式系统依赖[异步的](/glossary#异步的)[消息传递](/glossary#消息驱动) 建立组件之间的界限，这一界限确保了松耦合，隔离，[位置透明性](/glossary#位置透明性)等特性的实现，还提供了以消息的形式把[故障](/glossary#故障)委派出去的手段。利用显式的消息传递，可以通过建立和监视消息队列的方式实现负载管理、可伸缩性以及流程控制，还可以在必要时应用[背压](/glossary#背压)机制。位置透明的消息传递作为一种沟通手段，使得故障管理可以在相同的构造和语义下工作，无论实际的工作环境是跨集群的环境还是一个单独的主机。[非阻塞](/glossary#非阻塞)沟通则允许消息接收者仅在激活的状态下消费资源，导向更少量的系统开销。
 
 大系统由较小的系统构成，因此势必依赖于这些构成要素的响应式属性。这意味着响应式系统需要应用一定的设计原则，使这些属性在所有不同等级的构成要素上都适用，进而使它们可组合。世界上最大的系统所依赖的体系结构，都是基于这些属性构建的，它们每天都在服务数十亿人的需求。不要总是在开发中期重新发现这些设计原则了，在开发之初就有意识地运用它们吧！现在正是时候！
 
