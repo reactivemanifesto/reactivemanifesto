@@ -1,15 +1,16 @@
-The Reactive Manifesto
-即时响应宣言
+反应式宣言
 ----------------------
 
-Organisations working in disparate domains are independently discovering patterns for building software that look the same. These systems are more robust, more resilient, more flexible and better positioned to meet modern demands. 
+各组织独立工作在不同的领域，他们都在为构建软件探索一种相似的模式。这些系统更健壮、更容易恢复、更灵活，可以更好的满足现代需求。
 
+由于应用需求的变化，近几年发生了很大变化。仅仅几年前，一个大型的应用拥有数十台服务器，秒级的响应时间，小时级离线维护时间和千兆级的数据。 
+今天的应用可以被部署到任何机器上，从移动设备到运行在基于云计算的数以千计的多核处理器上的集群。用户期待毫秒级的响应时间和100%的运行时间。
+数据单位使用PB测量。使用过去的软件架构是无法满足现在的简单需求。
 
-These changes are happening because application requirements have changed dramatically in recent years. Only a few years ago a large application had tens of servers, seconds of response time, hours of offline maintenance and gigabytes of data. Today applications are deployed on everything from mobile devices to cloud-based clusters running thousands of multi-core processors. Users expect millisecond response times and 100% uptime. Data is measured in Petabytes. Today's demands are simply not met by yesterday’s software architectures.
+我们认为需要一整套系统架构方法，我们也认为所有必要的方面已经被分别的确认：我们希望系统是可响应、可恢复、可伸缩和消息驱动。我们称之为反应式系统。
 
-We believe that a coherent approach to systems architecture is needed, and we believe that all necessary aspects are already recognised individually: we want systems that are Responsive, Resilient, Elastic and Message Driven. We call these Reactive Systems.
-
-Systems built as Reactive Systems are more flexible, loosely-coupled and [scalable](/glossary#Scalability). This makes them easier to develop and amenable to change. They are significantly more tolerant of [failure](/glossary#Failure) and when failure does occur they meet it with elegance rather than disaster. Reactive Systems are highly responsive, giving [users](/glossary#User) effective interactive feedback. 
+系统构建成一个反应式系统，将更加的灵活、松散耦合和[可扩展](/glossary#Scalability)。这使得开发和定制更加容易。它们对[失败](/glossary#Failure)有明显
+的容忍，当失败发生时，它们面对的是优雅而不是灾难。反应式系统具有高反应度，提供给[用户](/glossary#User)有效的互动反馈。
 
 *Reactive Systems are:*
 
