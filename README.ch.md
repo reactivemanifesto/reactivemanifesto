@@ -19,17 +19,17 @@
 有效的处理。反应式系统的重点在于提供迅速和稳定的响应时间，建立可靠的上限，以便于交付质量稳定的服务。这种稳定的表现促使错误的处理的简化，建立了终端用户
 的信心并鼓励进一步的互动。
 
-* <a name="Resilient"></a>**可恢复**:该系统在[失败](http://www.reactivemanifesto.org/glossary#Failure)面前依然保持可响应。
-这个应用不仅对高可用的，关键任务系统 -任何不能恢复的系统将在失败后无响应。
+* <a name="Resilient"></a>**可恢复**：该系统在[失败](http://www.reactivemanifesto.org/glossary#Failure)面前依然保持可响应。
+这个不仅适用于高可用的，关键任务系统 - 任何不能恢复的系统将在失败后无响应。
 可恢复的实现是通过[同步复制](http://www.reactivemanifesto.org/glossary#Replication)、容器化、[隔离](http://www.reactivemanifesto.org/glossary#Isolation)和[委派](http://www.reactivemanifesto.org/glossary#Delegation)。
 失败可能包含在各个[组件](http://www.reactivemanifesto.org/glossary#Component)，隔离其他的组件从而确保系统的一部分可以失败和恢复，除非
 整个系统被损坏。
 
-* <a name="Elastic"></a>**可伸缩**:该系统在负载波动的情况下依然保持可响应。反应式系统对输入率的变化做出反应，通过增加或减少向服务分配的[资源](http://www.reactivemanifesto.org/glossary#Resource)
+* <a name="Elastic"></a>**可伸缩**：该系统在负载波动的情况下依然保持可响应。反应式系统对输入率的变化做出反应，通过增加或减少向服务分配的[资源](http://www.reactivemanifesto.org/glossary#Resource)
  以应对这些输入。这样的实现设计没有竞争点或中央瓶颈，产生分片或组件同步复制的能力并分发输入给各组件。反应式系统支持预测，以及反应，伸缩算法通过提供有关可用性能措施。
  他们采用具有成本效益的商品硬件和软件平台方的式实现伸缩。
  
-* <a name="Message-Driven"></a>**消息驱动**:反应式系统依赖[异步](http://www.reactivemanifesto.org/glossary#Asynchronous)的[消息传递](http://www.reactivemanifesto.org/glossary#Message-Driven)来界定
+* <a name="Message-Driven"></a>**消息驱动**：反应式系统依赖[异步](http://www.reactivemanifesto.org/glossary#Asynchronous)的[消息传递](http://www.reactivemanifesto.org/glossary#Message-Driven)来界定
  组件之间的边界，确保松散耦合、隔离和[位置透明](http://www.reactivemanifesto.org/glossary#Location-Transparency)。
  这个边界也提供了委派[失败](http://www.reactivemanifesto.org/glossary#Failure)作为消息的方式。
  使用透明的消息传递启用负载管理，伸缩，通过在系统建立和监控消息队列实现流量控制，当需要的时候启用[背压](http://www.reactivemanifesto.org/glossary#Back-Pressure)。
