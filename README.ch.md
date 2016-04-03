@@ -21,7 +21,7 @@
 
 * <a name="Resilient"></a>**可恢复**:该系统在[失败](http://www.reactivemanifesto.org/glossary#Failure)面前依然保持可响应。
 这个应用不仅对高可用的，关键任务系统 -任何不能恢复的系统将在失败后无响应。
-可恢复是通过[同步复制](http://www.reactivemanifesto.org/glossary#Replication)、包含、[隔离](http://www.reactivemanifesto.org/glossary#Isolation)和[委派](http://www.reactivemanifesto.org/glossary#Delegation)。
+可恢复是通过[同步复制](http://www.reactivemanifesto.org/glossary#Replication)、容器化、[隔离](http://www.reactivemanifesto.org/glossary#Isolation)和[委派](http://www.reactivemanifesto.org/glossary#Delegation)。
 失败可能包含在各个[组件](http://www.reactivemanifesto.org/glossary#Component)，隔离其他的组件从而确保系统的一部分可以失败和恢复，除非
 整个系统被损坏。
 
