@@ -2,7 +2,7 @@
 
 * [비동기](#Asynchronous)
 * [배압(Back-Pressure)](#Back-Pressure)
-* [Batching](#Batching)
+* [일괄 처리](#Batching)
 * [컴포넌트](#Component)
 * [위임](#Delegation)
 * [탄력성 (확장성과 대조)](#Elasticity)
