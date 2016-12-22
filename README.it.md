@@ -4,7 +4,7 @@ Il Manifesto dei Sistemi Reattivi
 Enti ed aziende operanti in vari settori stanno sperimentando in modo indipendente dei pattern architetturali similari per forgiare sistemi software. Questi sistemi si dimostrano robusti, resilienti e flessibili, e sono in grado di soddisfare al meglio le esigenze delle applicazioni software moderne.
 
 Questo movimento si verifica perchè i requisiti delle applicazioni software sono cambiati drasticamente negli ultimi anni. Fino a pochi anni fa le applicazione di grandi dimensioni erano ancora caratterizzate dall'impiego di decine di server, dall'avere tempi di risposta nell'ordine dei secondi, dal richiedere ore di manutenzione offline e dal gestire pochi gigabyte di dati. Le applicazioni di oggi sono deployate su ogni genere di device, da quelli mobili ai cluster cloud-based che utilizzano migliaia di processori multi-core; gli utenti di queste applicazioni si aspettano tempi di risposta nell'ordine dei millisecondi
- e un uptime pari al 100%. L'unità di utilizzo dei dati è il Petabyte. Molto semplicemente, le esigenze delle applicazioni di oggi non possono ssere soddisfatte dalle architetture software del passato.
+ e un uptime pari al 100%. L'unità di utilizzo dei dati è il Petabyte. Molto semplicemente, le esigenze delle applicazioni di oggi non possono essere soddisfatte dalle architetture software del passato.
 
 Crediamo che sia necessario un approccio coerente all'architettura dei sistemi software, e crediamo che i suoi elementi chiave siano già individuabili singolarmente: siamo a favore di sistemi che siano Responsivi, Elastici e Orientati ai Messaggi. Li chiamiamo Sistemi Reattivi.
 
