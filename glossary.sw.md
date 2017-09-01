@@ -52,5 +52,7 @@ Kile ambacho tunaelezea ni modular software architecture ambazo ni wazo la zaman
 ## <a name="Scalability"></a>Scalability
 
 ## <a name="Mfumo"></a>Mfumo
+Mfumo hutoa huduma kwa [watumiaji](#Mtumiaji) wake au wateja. Mfumo unaweza kuwa kubwa au ndogo, na ukiwa ndogo, utaundwa na [vipingele](#Kipengele) nyingi au chache tu. Vipengele vyote vya mfumo hushirikiana kwa kutoa huduma hizi. Mara nyingi vipengele hivi viko katika uhusiano wa client-server ndani ya mfumo huo. Mfumo unashiriki ustahimilivu uliyogawanywa kumaanisha kwamba [kufeli](#Kufeli) kwa sehemu inashughulikiwa ndani ya mfumo, [uwakilishi](#Uwakilishi) kutoka sehemu moja hadi nyingine. Ni muhimu kuona vikundi vya vipengele ndani ya mfumo kama [zimetengwa](#Kutengwa) katika kazi zao, [rasilimali](#Rasilimali) au kufeli
 
 ## <a name="Mtumiaji"></a>Mtumiaji
+Neno hili linatumiwa kutaja matumizi yoyote ya huduma, iwe binadamu au huduma nyingine
