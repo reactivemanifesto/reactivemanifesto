@@ -19,6 +19,7 @@
 * [Mtumiaji](#Mtumiaji)
 
 ## <a name="Asynchronous"></a>Asynchronous
+Kamusi la kiingereza unaojulikana kama The Oxford Dictionary umefafanua Asynchronous kama "vitendo visivyo fanyika kwa wakati mmoja". Katika mazingira ya ilani hii tuna maana kwamba usindikaji wa ombi hutokea katika hatua holela baada ya muda, wakati mwingine baada ya kuonekana kuambukizwa kutoka mteja huduma. Mteja hawezi moja kwa moja kuchunguza, au kusawazisha na, kutekeleza inayotokea ndani ya huduma. Hii ni na kinyume cha usindikaji synchronous ambayo ina maana kwamba mteja wasifu tu utekelezaji wake mara moja huduma ina kusindika ombi. 
 
 ## <a name="Back-Pressure"></a>Back-Pressure
 
