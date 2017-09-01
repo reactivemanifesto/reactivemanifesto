@@ -22,6 +22,8 @@
 Kamusi la kiingereza unaojulikana kama The Oxford Dictionary umefafanua Asynchronous kama "vitendo visivyo fanyika kwa wakati mmoja". Katika mazingira ya ilani hii tuna maana kwamba usindikaji wa ombi hutokea katika hatua holela baada ya muda, wakati mwingine baada ya kuonekana kuambukizwa kutoka mteja huduma. Mteja hawezi moja kwa moja kuchunguza, au kusawazisha na, kutekeleza inayotokea ndani ya huduma. Hii ni na kinyume cha usindikaji synchronous ambayo ina maana kwamba mteja wasifu tu utekelezaji wake mara moja huduma ina kusindika ombi. 
 
 ## <a name="Back-Pressure"></a>Back-Pressure
+Wakati [Kipengele](#Kipengele) moja inajitahidi, [mfumo](#Mfumo) kwa ujumla inahitaji kujibu kwa njia ya busara. Haikubaliki kwa sehemu ya chini ya dhiki kushindwa kabisa au kuangusha ujumbe kwa njia isilo dhibitishwa. Kwa ajili haiwezi kukabiliana na haiwezi kushindwa ni lazima kuwasiliana kwamba iko chini ya dhiki kwa vipengele vya juu na hivyo kuwafanya kupunguza mzigo kwa mfumo. Hii back–pressure ni muhimu kwa kutoa maoni ambayo inaruhusu mifumo kujibu kupakia taratibu badala ya kufeli. Back-pressure inaweza kuteleza njia yote hadi kwa mtumiaji, ambapo kiwango mwitikio inaweza kuharibika, lakini utaratibu huu itahakikisha kwamba mfumo unadumu chini ya mzigo, na kutoa taarifa ambayo inaweza kuruhusu mfumo wenyewe kuomba rasilimali nyingine ya kusaidia kusambaza mzigo, ona [Kunyumbuka](#Kunyumbuka)
+
 
 ## <a name="Batching"></a>Batching
 
