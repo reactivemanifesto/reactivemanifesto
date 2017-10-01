@@ -1,7 +1,7 @@
-El Manifiesto Reactivo
+El Manifiesto de Sistemas Reactivos
 ----------------------------------
 
-Organizaciones que trabajan en dominios diferentes están descubriendo de manera independiente patrones para construir software que busca hacer lo mismo. Estos sistemas son más robustos, más flexibles y están mejor posicionados para cumplir demandas modernas. 
+Organizaciones que trabajan en dominios diferentes están descubriendo de manera independiente patrones similares para construir software. Estos sistemas son más robustos, más flexibles y están mejor posicionados para cumplir demandas modernas. 
 
 Estos cambios están sucediendo porque los requerimientos de las aplicaciones han cambiado drásticamente en los últimos años. Sólo unos pocos años atrás, una gran aplicación tenía decenas de servidores, segundos de tiempo de respuesta, horas de mantenimiento fuera de línea y gigabytes en datos. Hoy, las aplicaciones se desplegan en cualquier cosa, desde dispositivos móviles hasta clusters en la nube corriendo en miles de procesadores multi-core. Los usuarios esperan que los tiempos de respuesta sean de milisegundos y que sus sistemas operen 24/7 (uptime 100%). Los datos son medidos en Petabytes. Las demandas de hoy simplemente no están siendo satisfechas por las arquitecturas software de ayer.
 
