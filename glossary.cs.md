@@ -2,7 +2,7 @@
 
 * [Asynchronní](#Asynchronous)
 * [Back-Pressure](#Back-Pressure)
-* [Hromadné zpracování](#Batching)
+* [Dávkové zpracování](#Batching)
 * [Komponenta](#Component)
 * [Delegace](#Delegation)
 * [Pružnost (na rozdíl od škálovatelnosti)](#Elasticity)
@@ -24,12 +24,12 @@ Doslovně přeloženo jako _“nesoudobý, nesoučasný či nesynchronizovaný v
 ## <a name="Back-Pressure"></a>Back-Pressure
 Pokud se [komponenta](#Component) nachází pod přílišnou zátěží, musí [systém](#System) jako celek reagovat přiměřeným způsobem. Komponenta pod takovýmto tlakem nesmí způsobit katastrofální výpadek celého systému, ani odmítnout či ztratit příchozí zprávy. Pokud není komponenta schopna nápor korektně zpracovat, ale zároveň nedojde ani k jejímu výpadku, musí být tato skutečnost komunikována směrem k nadřazeným komponentám, které se musí postarat o vyrovnání zátěže. Back-pressure je důležitý mechanismus zpětné vazby umožnující systému vyrovnat se s nadměrnou zátěží namísto celkového kolapsu. Back-pressure může být kaskádovitě aplikován na celé cestě požadavku od klienta k zajištění odolnosti systému vůči nadměrnému zatížení. Systém využije této informace k poskytnutí více zdrojů pro rozložení zátěže, viz [pružnost](#Elasticity).
 
-## <a name="Batching"></a>Batching
-Current computers are optimized for the repeated execution of the same task: instruction caches and branch prediction increase the number of instructions that can be processed per second while keeping the clock frequency unchanged. This means that giving different tasks to the same CPU core in rapid succession will not benefit from the full performance that could otherwise be achieved: if possible we should structure the program such that its execution alternates less frequently between different tasks. This can mean processing a set of data elements in batches, or it can mean performing different processing steps on dedicated hardware threads.
+## <a name="Batching"></a>Dávkové zpracování
+Současné počítače jsou optimalizované pro opakovaní stejných výpočtů: predikce a cachování instrukcí zvyšuje počet instrukcí za sekundu při neměnném taktu processoru. Pokud dostane stejný procesor jinou úlohu ke zpracování, nedokáže dosáhnout plného výpočetního výkonu: proto by měly být programy strukturovány tak, aby docházelo k co nejmenším změnám instrukcí. Buď je třeba zpracovávat sady dat v dávkách, nebo provádět rozdílné úlohy v různých vláknech.
 
-The same reasoning applies to the use of external [resources](#Resource) that need synchronization and coordination. The I/O bandwidth offered by persistent storage devices can improve dramatically when issuing commands from a single thread (and thereby CPU core) instead of contending for bandwidth from all cores. Using a single entry point has the added advantage that operations can be reordered to better suit the optimal access patterns of the device (current storage devices perform better for linear than random access).
+Ke stejnému závěru docházíme i při užití externích [zdrojů](#Resource), které potřebují synchronizaci a koordinaci. Vstupní-výstupní propustnost datových médií může být výrazně zvýšena, pokud je přístup prováděn z jediného dedikovaného vlákna. Použití jednoho vstupního bodu umožňuje reorganizaci operací optimálně pro dané zařízení (současná média pracují lépe při lineárním nežli přímém přístupu).
 
-Additionally, batching provides the opportunity to share out the cost of expensive operations such as I/O or expensive computations. For example, packing multiple data items into the same network packet or disk block to increase efficiency and reduce utilisation.
+Navíc umožňuje dávkové zpracování sdílení řežijí drahých operací jako čtení a psaní. Příkladem je zabalení více datových položek do stejného síťového packetu nebo psaní do jednoho diskového bloku pro zvýšení prostupnosti a efektivity.
 
 ## <a name="Component"></a>Component
 What we are describing is a modular software architecture, which is a very old idea, see for example [Parnas (1972)](https://www.cs.umd.edu/class/spring2003/cmsc838p/Design/criteria.pdf). We are using the term “component” due to its proximity with compartment, which implies that each component is self-contained, encapsulated and [isolated](#Isolation) from other components. This notion applies foremost to the runtime characteristics of the system, but it will typically also be reflected in the source code’s module structure as well. While different components might make use of the same software modules to perform common tasks, the program code that defines the top-level behavior of each component is then a module of its own. Component boundaries are often closely aligned with [Bounded Contexts](http://martinfowler.com/bliki/BoundedContext.html) in the problem domain. This means that the system design tends to reflect the problem domain and so is easy to evolve, while retaining isolation. Message [protocols](#Protocol) provide a natural mapping and communications layer between Bounded Contexts (components).
