@@ -7,7 +7,7 @@
 * [Delegace](#Delegation)
 * [Pružnost (na rozdíl od škálovatelnosti)](#Elasticity)
 * [Výpadek (na rozdíl od chyby)](#Failure)
-* [Izolace (and zamezení šíření výpadku)](#Isolation)
+* [Izolace (a zamezení šíření výpadku)](#Isolation)
 * [Transparentnost polohy](#Location-Transparency)
 * [Zprávami-řízený (na rozdíl od událostmi-řízený)](#Message-Driven)
 * [Neblokující](#Non-Blocking)
@@ -45,14 +45,14 @@ Výpadek je neočekávaná událost uvnitř služby bránící od pokračování
 
 Příkladem výpadku je hardwarová závada, neočekáváné ukončení procesu kvůli nedostatku prostředků, vady programu vedoucí k nekorektnímu vnitřnímu stavu systému, atd.
 
-## <a name="Isolation"></a>Isolation (and Containment)
-Isolation can be defined in terms of decoupling, both in time and space. Decoupling in time means that the sender and receiver can have independent life-cycles—they do not need to be present at the same time for communication to be possible. It is enabled by adding [asynchronous](#Asynchronous) boundaries between the [components](#Component), communicating through [message-passing](#Message-Driven). Decoupling in space (defined as [Location Transparency](#Location-Transparency)) means that the sender and receiver do not have to run in the same process, but wherever the operations division or the runtime itself decides is most efficient—which might change during an application's lifetime. 
+## <a name="Isolation"></a>Izolace (a zamezení šíření výpadku)
+Izolace znamená oddělení (decoupling) v čase a prostoru. Oddělení v čase znamená nezávislý životní cyklus odesílatele a příjemce, kteří v rámci komunikace dokonce nemusí být aktivní ve stejném časovém okamžiku. Oddělení v čase je umožněno skrze vložení [asynchronních](#Asynchronous) hranic mezi [komponenty](#Component) a komunikací přes [zasílání zpráv](#Message-Driven). Oddělení v prostoru ([transparentnost polohy](#Location-Transparency)) znamená, že odesílatel a příjemce nemusí běžet v rámci stejného procesu, ale kdekoliv dle operační efektivity, proměnlivě v průběhu životního cyklu aplikace. 
 
-True isolation goes beyond the notion of encapsulation found in most object-oriented languages and gives us compartmentalization and containment of:
-* State and behavior: it enables share-nothing designs and minimizes contention and coherence cost (as defined in the [Universal Scalability Law](http://www.perfdynamics.com/Manifesto/USLscalability.html); 
-* Failures: it allows [failures](#Failure) to be captured, signalled and managed at a fine-grained level instead of letting them cascade to other components.
+Pravá izolace jde za hranice objektového zapouzdření a přidává kompartmentalizaci a zamezení šíření:
+* Stavu a chování: umožňuje návrh nulového sdílení a minimalizuje režijní náklady spojené se soudržností (jak definováno v [Universal Scalability Law](http://www.perfdynamics.com/Manifesto/USLscalability.html); 
+* Výpadku: umožňuje [výpadky](#Failure) zachytit, signalizovat a spravovat na odpovídající úrovni namísto kaskádovitého šíření do ostatních komponent.
 
-Strong isolation between components is built on communication over well-defined [protocols](#Protocol) and enables loose coupling, leading to systems that are easier to understand, extend, test and evolve.
+Silná izolace mezi komponentami je postavena na komunikaci skrze kompletně definované [protokoly](#Protocol) a umožňují volnou provázanost vedoucí ke snadnějšímu pochopení, vývoji a testování.
 
 ## <a name="Location-Transparency"></a>Location Transparency
 [Elastic](#Elasticity) systems need to be adaptive and continuously react to changes in demand, they need to gracefully and efficiently increase and decrease scale. One key insight that simplifies this problem immensely is to realize that we are all doing distributed computing. This is true whether we are running our systems on a single node (with multiple independent CPUs communicating over the QPI link) or on a cluster of nodes (with independent machines communicating over the network). Embracing this fact means that there is no conceptual difference between scaling vertically on multicore or horizontally on the cluster.
