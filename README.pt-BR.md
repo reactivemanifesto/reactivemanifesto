@@ -5,7 +5,7 @@ Organizações que trabalham em diferentes ramos estão independentemente descob
 
 Essas transformações estão acontecendo porque os requisitos de sistemas mudaram drasticamente nos últimos anos. Há apenas alguns anos, uma grande aplicação tinha dezenas de servidores, tempo de resposta na casa dos segundos, horas de indisponibilidade para manutenção e gigabytes de dados. Aplicações atuais são entregues em todos os lugares, desde aplicativos móveis até aplicações na nuvem com clusters rodando milhares de processadores multi-core. Geralmente os usuários esperam respostas em milissegundos e 100% de disponibilidade. Dados são mensurados em petabytes. As demandas de hoje simplesmente não são mais atendidas pelas arquiteturas do passado.
 
-Nós acreditamos que é necessário uma abordagem consistente para arquitetura de sistemas, e acreditamos que todos os aspectos necessários já são reconhecidos individualmente: nós queremos sistemas Responsivos, Resilientes, Elásticos e Orientados a Mensagens. Nós chamamos isso de Sistemas Reativos.
+Nós acreditamos que é preciso haver uma abordagem consistente para arquitetura de sistemas, e acreditamos que todos os aspectos necessários já são reconhecidos individualmente: nós queremos sistemas Responsivos, Resilientes, Elásticos e Orientados a Mensagens. Nós chamamos isso de Sistemas Reativos.
 
 Sistemas criados como Reativos são muito mais flexíveis, desacoplados e [escaláveis](/glossary#Scalability). Isso os torna mais fáceis para desenvolver e mais abertos a mudanças. São significativamente mais tolerantes a [falhas](/glossary#Failure) e quando elas ocorrem são tratadas com elegância ao invés de desastre. Sistemas Reativos são altamente responsivos, dando aos [usuários](/glossary#User) um efetivo feedback interativo.
 
