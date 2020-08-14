@@ -84,7 +84,7 @@
 [컴포넌트](#Component)가 기능을 수행하기 위해 의존하는 모든 것을 자원이라고 하는데, 컴포넌트의 필요에 따라 제공되어야 한다. 여기에는 CPU 할당, 주 메모리 및 영구 저장소는 물론 네트워크 대역폭, 주 메모리 대역폭, CPU 캐시, 소켓 간 CPU 링크, 안정적인 타이머 및 작업 스케줄링 서비스, 기타 입출력 장치, 데이터베이스 또는 네트워크 파일 시스템과 같은 외부 서비스가 포함된다. 필요한 자원이 부족할 경우 컴포넌트가 필요한 시점에 작동하지 못하게 되므로 이러한 모든 자원에 대한 [탄력성](#Elasticity)과 복원성을 고려해야 한다.
 
 ## <a name="Scalability"></a>확장성
-[시스템](#System)의 기능 중 성능을 높이기 위해 더 많은 컴퓨팅 [자원](#Resources)을 사용하는 것은 자원 증가에 대한 입력 처리량의 증가 비율로 측정한다. 완벽하게 확장 가능한 시스템은 이 두 숫자가 비례한다는 특성이 있다: 자원을 두 배 할당하면 처리량이 두 배가 된다. 시스템 내의 병목 지점 또는 동기화 지점의 도입은 일반적으로 확장성을 제한하는 원인이다. [Amdahl’s Law and Gunther’s Universal Scalability Model](http://blogs.msdn.com/b/ddperf/archive/2009/04/29/parallel-scalability-isn-t-child-s-play-part-2-amdahl-s-law-vs-gunther-s-law.aspx) 참조.
+[시스템](#System)의 기능 중 성능을 높이기 위해 더 많은 컴퓨팅 [자원](#Resources)을 사용하는 것은 자원 증가에 대한 입력 처리량의 증가 비율로 측정한다. 완벽하게 확장 가능한 시스템은 이 두 숫자가 비례한다는 특성이 있다: 자원을 두 배 할당하면 처리량이 두 배가 된다. 시스템 내의 병목 지점 또는 동기화 지점의 도입은 일반적으로 확장성을 제한하는 원인이다. [Amdahl’s Law and Gunther’s Universal Scalability Model](https://docs.microsoft.com/en-ca/archive/blogs/ddperf/parallel-scalability-isnt-childs-play-part-2-amdahls-law-vs-gunthers-law) 참조.
 
 ## <a name="System"></a>시스템
 시스템은 [사용자](#User)나 클라이언트에게 서비스들을 제공하며 조합되는 [컴포넌트](#Component)의 수에 따라 커지거나 작아질 수 있다. 시스템 내의 모든 컴포넌트는 이러한 서비스들을 제공하기 위해 협력한다. 많은 경우에 컴포넌트들은 같은 시스템 내에서 클라이언트-서버 관계에 있다 (프론트엔드 컴포넌트들이 백엔드 컴포넌트들에 의존하는 경우 등). 한 시스템은 공통된 복원 모델을 공유하여 시스템 내의 컴포넌트 [장애](#Failure)는 다른 컴포넌트로 [위임](#Delegation)되어 시스템 내에서 처리된다. 시스템 내 컴포넌트 묶음이 가지는 기능, [자원](#Resource) 혹은 장애 모델이 시스템의 나머지 부분과 [분리](#Isolation)된다면 이것을 하위 시스템으로 보는 게 유용하다.

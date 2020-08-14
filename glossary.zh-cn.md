@@ -106,7 +106,7 @@
 
 ## <a name="可伸缩性"></a>可伸缩性
 
-一个[系统](#系统)通过利用更多的计算[资源](#资源)来提升其性能的能力， 是通过系统吞吐量的提升比上资源所增加的比值来衡量的。 一个完美的可伸缩性系统的特点是这两个数字是成正比的。 所分配的资源加倍也将使得吞吐量翻倍。 可伸缩性通常受限于系统中所引入的瓶颈或者同步点， 参见[Amdahl 定律以及 Gunther 的通用可伸缩模型（ Amdahl’s Law and Gunther’s Universal Scalability Model）](http://blogs.msdn.com/b/ddperf/archive/2009/04/29/parallel-scalability-isn-t-child-s-play-part-2-amdahl-s-law-vs-gunther-s-law.aspx)。
+一个[系统](#系统)通过利用更多的计算[资源](#资源)来提升其性能的能力， 是通过系统吞吐量的提升比上资源所增加的比值来衡量的。 一个完美的可伸缩性系统的特点是这两个数字是成正比的。 所分配的资源加倍也将使得吞吐量翻倍。 可伸缩性通常受限于系统中所引入的瓶颈或者同步点， 参见[Amdahl 定律以及 Gunther 的通用可伸缩模型（ Amdahl’s Law and Gunther’s Universal Scalability Model）](https://docs.microsoft.com/en-ca/archive/blogs/ddperf/parallel-scalability-isnt-childs-play-part-2-amdahls-law-vs-gunthers-law)。
 
 ## <a name="系统"></a>系统
 
